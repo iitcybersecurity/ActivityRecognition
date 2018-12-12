@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "751742041409",
+    "firebase_url": "https://gatheringapp-58c00.firebaseio.com",
+    "project_id": "gatheringapp-58c00",
+    "storage_bucket": "gatheringapp-58c00.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751742041409:android:9e1690cc33ccd316",
+        "android_client_info": {
+          "package_name": "iit.cnr.it.gatheringapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "751742041409-jan80lm12peh8mlahupfu5mj607l4f44.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "iit.cnr.it.gatheringapp",
+            "certificate_hash": "0d12cde4c8c612af00fc2ac3127d13b65e9cf925"
+          }
+        },
+        {
+          "client_id": "751742041409-qu5rtmi74c4e12b15viarfli9glbk7c2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8rZGQi-5rpcrRT35eAq58kru6oz976-U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "751742041409-qu5rtmi74c4e12b15viarfli9glbk7c2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

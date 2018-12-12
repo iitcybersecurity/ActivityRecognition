@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <!--
+    <TextView
+        android:id="@+id/ActivityTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Activities:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+        !-->
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ActivitiesTable">
+
+        <!--
+        <include
+            layout="@layout/row_table"
+            android:id="@+id/app_bar_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+!-->
+
+
+        <!--
+        <TableRow
+            android:id="@+id/table_row1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:background="#b3ffb3">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/btn_dialog" />
+
+            <TextView
+                android:id="@+id/name"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textColor="#000"
+                android:text="Activity"/>
+
+            <TextView
+                android:id="@+id/name1"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textColor="#000"
+                android:text="Walking"/>
+
+        </TableRow>!-->
+
+
+    </TableLayout>
+
+
+</FrameLayout>

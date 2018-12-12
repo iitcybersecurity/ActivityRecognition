@@ -1,0 +1,5 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('influxdb-2.5.2.jar'))
+dependencies {
+    implementation files('influxdb-2.5.2.jar')
+}

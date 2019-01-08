@@ -90,7 +90,7 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.acceleroemter_fragment,container,false);
+        View v = inflater.inflate(R.layout.accelerometer_fragment,container,false);
 
         TableLayout activitiesTable = activity.findViewById(R.id.ActivitiesTable);
         activitiesTable.setVisibility(View.INVISIBLE);

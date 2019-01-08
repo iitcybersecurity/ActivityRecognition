@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_sensors"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Sensors" />
+                android:id="@+id/nav_sensors"
+                android:icon="@drawable/ic_baseline_settings_input_antenna_24px"
+                android:title="@string/sensors"/>
+        <item
+                android:id="@+id/sup_learning"
+                android:icon="@drawable/ic_baseline_supervisor_account_24px"
+                android:title="@string/supervised_learning"/>
+        <item
+                android:id="@+id/unsup_learning"
+                android:icon="@drawable/ic_baseline_perm_identity_24px"
+                android:title="@string/unsupervised_learning"/>
+
         <!--<item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"

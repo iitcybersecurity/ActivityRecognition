@@ -16,6 +16,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sensors">Sensors</string>
+    <string name="unsupervised_learning">Unsupervised Learning</string>
+    <string name="supervised_learning">Supervised Learning</string>
 
 
 </resources>

@@ -19,6 +19,7 @@
     <string name="sensors">Sensors</string>
     <string name="unsupervised_learning">Unsupervised Learning</string>
     <string name="supervised_learning">Supervised Learning</string>
+    <string name="login_before_using_app">Login before using app</string>
 
 
 </resources>

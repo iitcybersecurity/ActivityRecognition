@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     int type = intent.getIntExtra("type", -1);
                     int confidence = intent.getIntExtra("confidence", 0);
                     if(activitiesHandler!=null)
-                        activitiesHandler.handleUserActivity(type,confidence);
+                        activitiesHandler.handleUserActivity(type,confidence, context);
                 }
             }
 

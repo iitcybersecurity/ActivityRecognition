@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Login before using app" />
+        android:text="@string/login_before_using_app" />
 
 
 </RelativeLayout>

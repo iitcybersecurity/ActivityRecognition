@@ -134,7 +134,7 @@ public class ActivitiesHandler {
 
     }
 
-    public void handleUserActivity(int type, int confidence) {
+    public void handleUserActivity(int type, int confidence, Context context) {
 
         if (confidence > CONFIDENCE) {
 
@@ -150,7 +150,7 @@ public class ActivitiesHandler {
 
             if(evaluateActivity()==DetectedActivity.WALKING && walking == false){
                 //writeOnDb
-                sensors.startSensors(ActivityToString(DetectedActivity.WALKING));
+                sensors.startSensors(ActivityToString(DetectedActivity.WALKING), context);
                 walking = true;
             }
             if(evaluateActivity()!=DetectedActivity.WALKING && walking == true) {

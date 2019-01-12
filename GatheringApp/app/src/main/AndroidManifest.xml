@@ -53,10 +53,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
-            android:name=".DetectedActivitiesIntentService"
+            android:name=".service.DetectedActivitiesIntentService"
             android:exported="false" />
 
-        <service android:name=".BackgroundDetectedActivitiesService"></service>
+        <service android:name=".service.BackgroundDetectedActivitiesService"></service>
 
     </application>
 

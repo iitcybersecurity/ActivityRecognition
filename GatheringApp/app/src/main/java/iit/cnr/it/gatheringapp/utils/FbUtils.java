@@ -1,16 +1,16 @@
-package iit.cnr.it.gatheringapp;
+package iit.cnr.it.gatheringapp.utils;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +27,7 @@ public class FbUtils extends AsyncTask<String, Void, Bitmap> {
     private String userName;
     private MainActivity activity;
 
-    FbUtils(String userId, String userName, MainActivity _activity){
+    public FbUtils(String userId, String userName, MainActivity _activity){
         this.userID = userId;
         this.userName = userName;
         this.activity = _activity;

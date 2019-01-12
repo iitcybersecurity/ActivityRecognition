@@ -1,4 +1,4 @@
-package iit.cnr.it.gatheringapp;
+package iit.cnr.it.gatheringapp.sensors;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,6 +23,9 @@ import android.widget.Toast;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.MainActivity;
+import iit.cnr.it.gatheringapp.utils.Utils;
 
 
 import java.util.Calendar;
@@ -74,9 +77,9 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
     //streaming button
     private Button connectPhones;
 
-    Context context = null;
-    String userName = "";
-    MainActivity activity;
+    private Context context;
+    private String userName = "";
+    private MainActivity activity;
 
 
     public Accelerometer(Context context, String userName, MainActivity _activity){
@@ -130,6 +133,7 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
         graph_x.getViewport().setScalableY(true);
         // activate vertical scrolling
         graph_x.getViewport().setScrollableY(true);
+
         graph_x.getGridLabelRenderer().setHorizontalLabelsVisible(false);
 
 
@@ -234,7 +238,7 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
         //Gyroscope
         if (sensor_choosed==1) {
             computeSamplingRate();
-            Log.d("Gyr: ",  System.currentTimeMillis()/1000 + " " + x_gyr + " " + y_gyr + " " + z_gyr + " " + graph_x.getViewport().getMinX(true));
+            Log.v("Gyr: ",  System.currentTimeMillis()/1000 + " " + x_gyr + " " + y_gyr + " " + z_gyr + " " + graph_x.getViewport().getMinX(true));
             series_x.appendData(new DataPoint(Calendar.getInstance().getTime(),x_gyr), true,40 );
             series_y.appendData(new DataPoint(Calendar.getInstance().getTime(),y_gyr), true,40 );
             series_z.appendData(new DataPoint(Calendar.getInstance().getTime(),z_gyr), true,40 );
@@ -260,7 +264,6 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
             graph_y.setVisibility(View.VISIBLE);
             graph_z.setVisibility(View.VISIBLE);
             graph_y.setTitle("Y axis");
-
         }
         if (sensor_choosed == 1){
             graph_x.setVisibility(View.VISIBLE);
@@ -307,11 +310,34 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
     }
 
     public void startSensors() {
-        senSensorManager.registerListener(this, senGyroscope, 1);
-        senSensorManager.registerListener(this, senAccelerometer, 1);
+
+        int accelerometerSensibility;
+        int gyroscopeSensibility;
+        int stepCounterSensibility;
+        try {
+            accelerometerSensibility = Integer.getInteger(Utils.getConfigValue(this.activity.getApplicationContext(), "accelerometer.sensibility"));
+            gyroscopeSensibility = Integer.getInteger(Utils.getConfigValue(this.activity.getApplicationContext(), "gyroscope.sensibility"));
+            stepCounterSensibility = Integer.getInteger(Utils.getConfigValue(this.activity.getApplicationContext(), "step.counter.sensibility"));
+
+        } catch (Exception exception){
+            exception.printStackTrace();
+            Log.d("SENSORS_ERROR", "Unable to retrieve configuration values, setting to default...");
+            accelerometerSensibility = SensorManager.SENSOR_DELAY_NORMAL;
+            gyroscopeSensibility = SensorManager.SENSOR_DELAY_NORMAL;
+            stepCounterSensibility = SensorManager.SENSOR_DELAY_NORMAL;
+        }
+
+        Log.d("SENSORS_CONF",
+                "Running sensors with following values: " +
+                        "Accelerometer {" + accelerometerSensibility + "} - " +
+                        "Gyroscope {" + gyroscopeSensibility + "} - " +
+                        "StepCounter {" + stepCounterSensibility + "}");
+
+        senSensorManager.registerListener(this, senGyroscope, gyroscopeSensibility);
+        senSensorManager.registerListener(this, senAccelerometer, accelerometerSensibility);
 
         if (countSensor != null) {
-            senSensorManager.registerListener(this, countSensor, 1);
+            senSensorManager.registerListener(this, countSensor, stepCounterSensibility);
         } else {
             Toast.makeText(getActivity(), "Count sensor not available!", Toast.LENGTH_LONG).show();
         }

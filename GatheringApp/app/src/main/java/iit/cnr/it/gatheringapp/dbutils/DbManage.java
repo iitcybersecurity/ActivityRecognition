@@ -1,7 +1,9 @@
-package iit.cnr.it.gatheringapp;
+package iit.cnr.it.gatheringapp.dbutils;
 
 import android.content.Context;
 import android.util.Log;
+import iit.cnr.it.gatheringapp.utils.Utils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

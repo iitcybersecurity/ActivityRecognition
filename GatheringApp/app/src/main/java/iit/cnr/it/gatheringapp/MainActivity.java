@@ -1,8 +1,6 @@
 package iit.cnr.it.gatheringapp;
 
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,30 +8,26 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
+import com.facebook.*;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
+import iit.cnr.it.gatheringapp.sensors.Accelerometer;
+import iit.cnr.it.gatheringapp.utils.UserActivitiesHandler;
+import iit.cnr.it.gatheringapp.service.BackgroundDetectedActivitiesService;
+import iit.cnr.it.gatheringapp.utils.FbUtils;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Activity recognition
     BroadcastReceiver broadcastReceiver;
     public static final String BROADCAST_DETECTED_ACTIVITY = "activity_intent";
-    public ActivitiesHandler activitiesHandler = null;
+    public UserActivitiesHandler userActivitiesHandler = null;
     private PowerManager.WakeLock mWakeLock = null;
 
 
@@ -67,17 +61,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "activityMain");
         mWakeLock.acquire();
 
-        loginText = findViewById(R.id.login_text);
+        loginText = findViewById(iit.cnr.it.gatheringapp.R.id.login_text);
 
 
         //Facebook sdk initialization
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        setContentView(R.layout.activity_main);
+        setContentView(iit.cnr.it.gatheringapp.R.layout.activity_main);
         createToolbar();
 
         mFacebookCallbackManager = CallbackManager.Factory.create();
-        LoginButton mFacebookSignInButton = findViewById(R.id.login_button);
+        LoginButton mFacebookSignInButton = findViewById(iit.cnr.it.gatheringapp.R.id.login_button);
         mFacebookSignInButton.setReadPermissions("email");
 
         //See if the user is already logged
@@ -125,8 +119,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (intent.getAction().equals(BROADCAST_DETECTED_ACTIVITY)) {
                     int type = intent.getIntExtra("type", -1);
                     int confidence = intent.getIntExtra("confidence", 0);
-                    if(activitiesHandler!=null)
-                        activitiesHandler.handleUserActivity(type,confidence, context);
+                    if(userActivitiesHandler !=null)
+                        userActivitiesHandler.handleUserActivity(type,confidence, context);
                 }
             }
 
@@ -163,11 +157,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    void getFbInfo(final String userID, final String userName){
+    private void getFbInfo(final String userID, final String userName){
         accelerometerFragment = new Accelerometer(this.getApplicationContext(), userName, this);
         FbUtils utilsFb = new FbUtils(userID, userName, this);
         utilsFb.execute();
-        activitiesHandler = new ActivitiesHandler(this, userName);
+        userActivitiesHandler = new UserActivitiesHandler(this, userName);
 
     }
 
@@ -203,19 +197,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     void createToolbar(){
-        AppBarLayout barLayout = findViewById(R.id.appBar);
+        AppBarLayout barLayout = findViewById(iit.cnr.it.gatheringapp.R.id.appBar);
         barLayout.setExpanded(true);
 
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(iit.cnr.it.gatheringapp.R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(iit.cnr.it.gatheringapp.R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, iit.cnr.it.gatheringapp.R.string.navigation_drawer_open, iit.cnr.it.gatheringapp.R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(iit.cnr.it.gatheringapp.R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         toolbar.setVisibility(View.INVISIBLE);
@@ -225,13 +219,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(iit.cnr.it.gatheringapp.R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
-        TableLayout activitiesTable = findViewById(R.id.ActivitiesTable);
+        TableLayout activitiesTable = findViewById(iit.cnr.it.gatheringapp.R.id.ActivitiesTable);
         activitiesTable.setVisibility(View.VISIBLE);
         //activityTextView.setVisibility(View.VISIBLE);
         System.out.println("BACK PRESSED");
@@ -239,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(iit.cnr.it.gatheringapp.R.menu.main, menu);
         return true;
     }
 
@@ -248,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == iit.cnr.it.gatheringapp.R.id.action_settings) {
             return true;
         }
 
@@ -261,11 +255,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_sensors) {
+        if (id == iit.cnr.it.gatheringapp.R.id.nav_sensors) {
 
 
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, accelerometerFragment)
+                    .replace(iit.cnr.it.gatheringapp.R.id.content_frame, accelerometerFragment)
                     .addToBackStack(null)
                     .commit();
 

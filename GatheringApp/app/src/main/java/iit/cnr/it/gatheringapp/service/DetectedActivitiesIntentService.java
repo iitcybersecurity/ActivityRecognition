@@ -1,9 +1,8 @@
-package iit.cnr.it.gatheringapp;
+package iit.cnr.it.gatheringapp.service;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.location.ActivityRecognitionResult;
 import com.google.android.gms.location.DetectedActivity;

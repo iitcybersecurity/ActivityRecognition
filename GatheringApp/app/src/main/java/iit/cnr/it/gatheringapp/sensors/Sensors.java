@@ -1,4 +1,4 @@
-package iit.cnr.it.gatheringapp;
+package iit.cnr.it.gatheringapp.sensors;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -7,6 +7,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 import android.widget.Toast;
+import iit.cnr.it.gatheringapp.dbutils.DbManage;
+import iit.cnr.it.gatheringapp.MainActivity;
+import iit.cnr.it.gatheringapp.utils.Utils;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;

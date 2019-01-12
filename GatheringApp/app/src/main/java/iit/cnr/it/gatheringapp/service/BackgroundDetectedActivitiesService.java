@@ -1,11 +1,10 @@
-package iit.cnr.it.gatheringapp;
+package iit.cnr.it.gatheringapp.service;
 
 /**
  * Created by giacomo on 24/10/18.
  */
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -22,6 +21,8 @@ import com.google.android.gms.location.ActivityRecognitionClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.MainActivity;
 
 public class BackgroundDetectedActivitiesService extends Service {
     private static final String TAG = BackgroundDetectedActivitiesService.class.getSimpleName();

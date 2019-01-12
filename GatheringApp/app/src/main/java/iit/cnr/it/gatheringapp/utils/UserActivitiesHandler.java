@@ -1,21 +1,21 @@
-package iit.cnr.it.gatheringapp;
+package iit.cnr.it.gatheringapp.utils;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.location.DetectedActivity;
+import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.MainActivity;
+import iit.cnr.it.gatheringapp.sensors.Sensors;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +25,7 @@ import java.util.Locale;
  * Created by giacomo on 25/10/18.
  */
 
-public class ActivitiesHandler {
+public class UserActivitiesHandler {
     private static final int CONFIDENCE = 70;
     private static final int QUEUE_SIZE = 4;
 
@@ -40,7 +40,7 @@ public class ActivitiesHandler {
     private int CURRENT_ACTIVITIES_TO_SHOW = 6;
 
 
-    public ActivitiesHandler(MainActivity _activity, String username){
+    public UserActivitiesHandler(MainActivity _activity, String username){
         detectedArray = new ArrayList<>();
         walking = false;
         this.activity = _activity;

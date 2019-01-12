@@ -1,10 +1,11 @@
-package iit.cnr.it.gatheringapp;
+package iit.cnr.it.gatheringapp.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import iit.cnr.it.gatheringapp.R;
 
 /**
  * Created by giacomo on 05/02/18.

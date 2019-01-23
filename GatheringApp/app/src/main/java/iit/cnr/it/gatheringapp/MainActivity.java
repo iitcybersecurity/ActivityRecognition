@@ -70,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(iit.cnr.it.gatheringapp.R.layout.activity_main);
         createToolbar();
 
-        mFacebookCallbackManager = CallbackManager.Factory.create();
+/*        mFacebookCallbackManager = CallbackManager.Factory.create();
         LoginButton mFacebookSignInButton = findViewById(iit.cnr.it.gatheringapp.R.id.login_button);
-        mFacebookSignInButton.setReadPermissions("email");
+        mFacebookSignInButton.setReadPermissions("email");*/
 
         //See if the user is already logged
         final AccessToken accessToken = AccessToken.getCurrentAccessToken();
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setProfile();
         }
 
-        // Callback registration
+         /*// Callback registration
         mFacebookSignInButton.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        //Facebook tracker
+       //Facebook tracker
         AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     createToolbar();
                 }
             }
-        };
+        };*/
 
 
         //Activity recognition
@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(iit.cnr.it.gatheringapp.R.menu.main, menu);
+        getMenuInflater().inflate(iit.cnr.it.gatheringapp.R.menu.action_menu, menu);
         return true;
     }
 

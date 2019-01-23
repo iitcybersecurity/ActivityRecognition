@@ -1,6 +1,7 @@
 package iit.cnr.it.gatheringapp.utils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -25,9 +26,9 @@ import java.net.URL;
 public class FbUtils extends AsyncTask<String, Void, Bitmap> {
     private String userID;
     private String userName;
-    private MainActivity activity;
+    private Activity activity;
 
-    public FbUtils(String userId, String userName, MainActivity _activity){
+    public FbUtils(String userId, String userName, Activity _activity){
         this.userID = userId;
         this.userName = userName;
         this.activity = _activity;

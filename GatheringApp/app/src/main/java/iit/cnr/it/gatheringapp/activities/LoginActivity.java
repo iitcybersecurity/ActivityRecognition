@@ -29,8 +29,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.facebook.*;
+import com.facebook.login.Login;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import iit.cnr.it.gatheringapp.MainActivity;
 import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.sensors.Accelerometer;
+import iit.cnr.it.gatheringapp.utils.FbUtils;
+import iit.cnr.it.gatheringapp.utils.UserActivitiesHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +72,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    //Facebook variables
+    private CallbackManager mFacebookCallbackManager;
+    private ProfileTracker mProfileTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +106,52 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        //Facebook sdk initialization
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        mFacebookCallbackManager = CallbackManager.Factory.create();
+        LoginButton mFacebookSignInButton = findViewById(R.id.facebookLogin);
+        mFacebookSignInButton.setReadPermissions("email");
+
+        //See if the user is already logged
+        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+        if(isLoggedIn){
+            setProfile();
+        }
+
+        // Callback registration
+        mFacebookSignInButton.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+                setProfile();
+                Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+            }
+        });
+
+        //Facebook tracker
+        AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
+
+                if (currentAccessToken == null){
+                    //User logged out
+                    //createToolbar();
+                }
+            }
+        };
     }
 
     private void populateAutoComplete() {
@@ -149,7 +206,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void attemptLogin() {
         boolean isLogged = true;
         if (isLogged) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, Main2Activity.class);
             startActivity(intent);
         } else {
             if (mAuthTask != null) {
@@ -355,5 +412,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    void setProfile() {
+        Profile profile;
+
+        if (Profile.getCurrentProfile() == null) mProfileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                getFbInfo(currentProfile.getId(), currentProfile.getName());
+                mProfileTracker.stopTracking();
+            }
+        };
+        else {
+            profile = Profile.getCurrentProfile();
+            getFbInfo(profile.getId(), profile.getName());
+        }
+
+    }
+
+    private void getFbInfo(final String userID, final String userName){
+        //accelerometerFragment = new Accelerometer(this.getApplicationContext(), userName, this);
+        FbUtils utilsFb = new FbUtils(userID, userName, this);
+        utilsFb.execute();
+        //userActivitiesHandler = new UserActivitiesHandler(this, userName);
+
+    }
+
 }
 

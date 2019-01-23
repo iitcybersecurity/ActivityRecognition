@@ -1,41 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-    package="iit.cnr.it.gatheringapp">
+          package="iit.cnr.it.gatheringapp">
 
     <uses-feature
-        android:name="android.hardware.sensor.accelerometer"
-        android:required="true" />
+            android:name="android.hardware.sensor.accelerometer"
+            android:required="true"/>
     <uses-feature
-        android:name="android.hardware.sensor.gyroscope"
-        android:required="true" />
+            android:name="android.hardware.sensor.gyroscope"
+            android:required="true"/>
     <uses-feature
-        android:name="android.hardware.sensor.stepcounter"
-        android:required="true" />
+            android:name="android.hardware.sensor.stepcounter"
+            android:required="true"/>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
-
-
-
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:launchMode="singleTask"
-            android:name=".MainActivity"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:roundIcon="@mipmap/ic_launcher_cnr_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity
+                android:name=".MainActivity"
+                android:label="@string/app_name"
+                android:launchMode="singleTask"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
         <activity
                 android:name=".activities.LoginActivity"
                 android:label="@string/app_name"
@@ -45,29 +41,31 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
 
+        <activity
+                android:name=".activities.Main2Activity"
+                android:label="@string/title_activity_main2">
+        </activity>
 
         <!-- Facebook Integration -->
         <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+                android:name="com.facebook.sdk.ApplicationId"
+                android:value="@string/facebook_app_id"/>
 
         <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            tools:replace="android:theme"/>
+                android:name="com.facebook.FacebookActivity"
+                android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                android:label="@string/app_name"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                tools:replace="android:theme"/>
 
         <service
-            android:name=".service.DetectedActivitiesIntentService"
-            android:exported="false" />
+                android:name=".service.DetectedActivitiesIntentService"
+                android:exported="false"/>
+        <service android:name=".service.BackgroundDetectedActivitiesService"/>
 
-        <service android:name=".service.BackgroundDetectedActivitiesService"></service>
 
     </application>
 
 </manifest>
-

@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.google.android.gms.location.DetectedActivity;
 import iit.cnr.it.gatheringapp.R;
 import iit.cnr.it.gatheringapp.MainActivity;
+import iit.cnr.it.gatheringapp.activities.Main2Activity;
 import iit.cnr.it.gatheringapp.sensors.Sensors;
 
 import java.text.SimpleDateFormat;
@@ -32,7 +34,7 @@ public class UserActivitiesHandler {
     private static ArrayList<Integer> detectedArray;
     private boolean walking;
 
-    private MainActivity activity;
+    private AppCompatActivity activity;
     private Sensors sensors;
     private String username;
     private int currentActivity;
@@ -40,7 +42,7 @@ public class UserActivitiesHandler {
     private int CURRENT_ACTIVITIES_TO_SHOW = 6;
 
 
-    public UserActivitiesHandler(MainActivity _activity, String username){
+    public UserActivitiesHandler(AppCompatActivity _activity, String username){
         detectedArray = new ArrayList<>();
         walking = false;
         this.activity = _activity;

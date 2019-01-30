@@ -51,16 +51,16 @@ public class FbUtils extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
-        NavigationView navView = this.activity.findViewById(R.id.nav_view);
-        TextView tv = navView.getHeaderView(0).findViewById(R.id.textUsername);
-        tv.setText(userName);
-        ImageView iv = navView.getHeaderView(0).findViewById(R.id.photoProfile);
-        iv.setImageBitmap(bitmap);
-        View appBarLayout = this.activity.findViewById( R.id.app_bar_main );
-        View appBar = appBarLayout.findViewById(R.id.appBar);
-        View toolbar = appBar.findViewById(R.id.toolbar);
-        toolbar.setVisibility(View.VISIBLE);
-        //TextView activityTextView = this.activity.findViewById(R.id.ActivityTextView);
+
+        TextView username = this.activity.findViewById(R.id.facebook_username);
+        username.setText(userName);
+        ImageView profilePicture = this.activity.findViewById(R.id.facebook_profile_picture);
+        profilePicture.setImageBitmap(bitmap);
+//        View appBarLayout = this.activity.findViewById( R.id.app_bar_main );
+//        View appBar = appBarLayout.findViewById(R.id.appBar);
+//        View toolbar = appBar.findViewById(R.id.toolbar);
+//        toolbar.setVisibility(View.VISIBLE);
+//        //TextView activityTextView = this.activity.findViewById(R.id.ActivityTextView);
         //activityTextView.setText("Activities:");
 
 

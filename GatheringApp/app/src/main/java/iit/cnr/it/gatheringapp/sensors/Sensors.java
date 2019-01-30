@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 import iit.cnr.it.gatheringapp.dbutils.DbManage;
@@ -28,7 +29,7 @@ public class Sensors implements SensorEventListener {
     private float x_acc, y_acc, z_acc, x_gyr, y_gyr, z_gyr;
 
     //Main activity
-    private MainActivity activity;
+    private AppCompatActivity activity;
 
     //batch size
     private int batch_size = 50;
@@ -40,7 +41,7 @@ public class Sensors implements SensorEventListener {
     private String activityLabel = "";
 
 
-    public Sensors(MainActivity _activity, String username) {
+    public Sensors(AppCompatActivity _activity, String username) {
         this.activity = _activity;
         this.username = username;
 

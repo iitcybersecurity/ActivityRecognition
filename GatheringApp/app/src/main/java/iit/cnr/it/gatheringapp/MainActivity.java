@@ -196,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    //TODO REMOVE
     void createToolbar(){
         AppBarLayout barLayout = findViewById(iit.cnr.it.gatheringapp.R.id.appBar);
         barLayout.setExpanded(true);
@@ -231,12 +232,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         System.out.println("BACK PRESSED");
     }
 
+    //TODO REMOVE
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(iit.cnr.it.gatheringapp.R.menu.action_menu, menu);
         return true;
     }
 
+    //TODO REMOVE
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -249,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    //TODO REMOVE
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

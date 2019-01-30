@@ -16,8 +16,6 @@
             android:icon="@drawable/ic_baseline_training"
             android:title="Training"/>
 
-
-
     <item
             android:id="@+id/navigation_history"
             android:icon="@drawable/ic_baseline_history"

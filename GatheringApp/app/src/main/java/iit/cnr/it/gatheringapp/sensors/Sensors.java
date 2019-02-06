@@ -1,10 +1,12 @@
 package iit.cnr.it.gatheringapp.sensors;
 
+import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -29,7 +31,7 @@ public class Sensors implements SensorEventListener {
     private float x_acc, y_acc, z_acc, x_gyr, y_gyr, z_gyr;
 
     //Main activity
-    private AppCompatActivity activity;
+    private Activity activity;
 
     //batch size
     private int batch_size = 50;
@@ -41,7 +43,7 @@ public class Sensors implements SensorEventListener {
     private String activityLabel = "";
 
 
-    public Sensors(AppCompatActivity _activity, String username) {
+    public Sensors(Activity _activity, String username) {
         this.activity = _activity;
         this.username = username;
 

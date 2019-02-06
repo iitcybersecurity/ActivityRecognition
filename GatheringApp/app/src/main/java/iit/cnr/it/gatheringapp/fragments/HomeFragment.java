@@ -8,7 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.utils.FbUtils;
+import iit.cnr.it.gatheringapp.utils.UserActivitiesHandler;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,8 +32,12 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ProfileTracker mProfileTracker;
+
 
     private OnFragmentInteractionListener mListener;
+    private UserActivitiesHandler userActivitiesHandler = null;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -60,6 +68,7 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setProfile();
     }
 
     @Override
@@ -99,6 +108,31 @@ public class HomeFragment extends Fragment {
         mListener = null;
     }
 
+    void setProfile() {
+        Profile profile;
+
+        if (Profile.getCurrentProfile() == null) mProfileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                getFbInfo(currentProfile.getId(), currentProfile.getName());
+                mProfileTracker.stopTracking();
+            }
+        };
+        else {
+            profile = Profile.getCurrentProfile();
+            getFbInfo(profile.getId(), profile.getName());
+        }
+    }
+
+    private void getFbInfo(final String userID, final String userName){
+        //accelerometerFragment = new Accelerometer(this.getApplicationContext(), userName, this);
+
+        FbUtils utilsFb = new FbUtils(userID, userName, getActivity());
+        utilsFb.execute();
+        userActivitiesHandler = new UserActivitiesHandler(getActivity(), userName);
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -113,4 +147,6 @@ public class HomeFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

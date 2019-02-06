@@ -7,22 +7,35 @@
              android:id="@+id/fragment_home">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-            android:orientation="vertical"
+    <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" android:id="@+id/linearLayout">
         <ImageView
                 android:id="@+id/facebook_profile_picture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
+                android:layout_width="0dp"
+                android:layout_height="128dp"
                 android:paddingTop="@dimen/nav_header_vertical_spacing"
-                app:srcCompat="@mipmap/ic_launcher_round"/>
+                app:srcCompat="@mipmap/ic_launcher_round"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/facebook_username"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"/>
         <TextView
                 android:id="@+id/facebook_username"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Home"/>
-    </LinearLayout>
+                android:layout_marginTop="30dp"
+                android:layout_width="200dp"
+                android:layout_height="42dp"
+                android:text="Home"
+                app:layout_constraintTop_toBottomOf="@+id/facebook_profile_picture"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/activities_table"
+                app:layout_constraintStart_toStartOf="parent" android:textAlignment="center" android:textSize="24sp"/>
+        <TableLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/activities_table"
+                app:layout_constraintTop_toBottomOf="@+id/facebook_username" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/facebook_username"/>
+    </android.support.constraint.ConstraintLayout>
 
 
 </FrameLayout>

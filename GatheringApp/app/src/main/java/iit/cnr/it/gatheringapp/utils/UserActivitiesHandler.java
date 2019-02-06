@@ -1,9 +1,11 @@
 package iit.cnr.it.gatheringapp.utils;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -34,7 +36,7 @@ public class UserActivitiesHandler {
     private static ArrayList<Integer> detectedArray;
     private boolean walking;
 
-    private AppCompatActivity activity;
+    private Activity activity;
     private Sensors sensors;
     private String username;
     private int currentActivity;
@@ -42,7 +44,7 @@ public class UserActivitiesHandler {
     private int CURRENT_ACTIVITIES_TO_SHOW = 6;
 
 
-    public UserActivitiesHandler(AppCompatActivity _activity, String username){
+    public UserActivitiesHandler(Activity _activity, String username){
         detectedArray = new ArrayList<>();
         walking = false;
         this.activity = _activity;
@@ -170,7 +172,7 @@ public class UserActivitiesHandler {
     }
 
     private void addRow(String label, String time){
-        TableLayout activitiesTable = this.activity.findViewById(R.id.ActivitiesTable);
+        TableLayout activitiesTable = this.activity.findViewById(R.id.activities_table);
 
         if(activitiesTable.getChildCount()>CURRENT_ACTIVITIES_TO_SHOW) {
             activitiesTable.removeViewAt(0);

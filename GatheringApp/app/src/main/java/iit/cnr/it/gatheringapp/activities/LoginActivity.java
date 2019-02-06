@@ -71,10 +71,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    boolean isLoggedIn;
 
     //Facebook variables
     private CallbackManager mFacebookCallbackManager;
-    private ProfileTracker mProfileTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,19 +115,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         //See if the user is already logged
         final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+        isLoggedIn = accessToken != null && !accessToken.isExpired();
         if(isLoggedIn){
-            setProfile();
+            goToHomepage();
         }
 
         // Callback registration
         mFacebookSignInButton.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
-                setProfile();
-                Intent intent = new Intent(LoginActivity.this, Main2Activity.class);
-                startActivity(intent);
+                goToHomepage();
             }
 
             @Override
@@ -204,10 +201,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        boolean isLogged = true;
-        if (isLogged) {
-            Intent intent = new Intent(this, Main2Activity.class);
-            startActivity(intent);
+
+        if (isLoggedIn) {
+           goToHomepage();
         } else {
             if (mAuthTask != null) {
                 return;
@@ -419,30 +415,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    void setProfile() {
-        Profile profile;
-
-        if (Profile.getCurrentProfile() == null) mProfileTracker = new ProfileTracker() {
-            @Override
-            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                getFbInfo(currentProfile.getId(), currentProfile.getName());
-                mProfileTracker.stopTracking();
-            }
-        };
-        else {
-            profile = Profile.getCurrentProfile();
-            getFbInfo(profile.getId(), profile.getName());
-        }
-
+    private void goToHomepage() {
+        Intent intent = new Intent(this, Main2Activity.class);
+        startActivity(intent);
     }
-
-    private void getFbInfo(final String userID, final String userName){
-        //accelerometerFragment = new Accelerometer(this.getApplicationContext(), userName, this);
-        FbUtils utilsFb = new FbUtils(userID, userName, this);
-        utilsFb.execute();
-        //userActivitiesHandler = new UserActivitiesHandler(this, userName);
-
-    }
-
 }
 

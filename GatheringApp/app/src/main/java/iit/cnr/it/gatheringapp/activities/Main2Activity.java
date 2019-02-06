@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -70,6 +71,21 @@ public class Main2Activity extends AppCompatActivity
         }
         return false;
     }
+/*
+    protected void displayFragmentA(Fragment currentFragment, Fragment nextFragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (currentFragment.isAdded()) { // if the fragment is already in container
+            ft.show(currentFragment);
+        } else { // fragment needs to be added to frame container
+            ft.add(R.id.flContainer, currentFragment, currentFragment.getTag());
+        }
+        // Hide fragment B
+        if (nextFragment.isAdded()) { ft.hide(nextFragment); }
+        // Hide fragment C
+        if (fragmentC.isAdded()) { ft.hide(fragmentC); }
+        // Commit changes
+        ft.commit();
+    }*/
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

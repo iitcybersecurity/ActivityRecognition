@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -34,11 +35,15 @@ public class Main2Activity extends AppCompatActivity
     private ProfileTracker mProfileTracker;
     private UserActivitiesHandler userActivitiesHandler = null;
 
+    private HomeFragment homeFragment;
+    private SensorsFragment sensorsFragment;
+    private TrainingFragment trainingFragment;
+    private HistoryFragment historyFragment;
 
-    private static final String HOME_TAG ="F_HOME";
-    private static final String SENSORS_TAG ="F_SENSORS";
-    private static final String TRAINING_TAG ="F_TRAINING";
-    private static final String HISTORY_TAG ="F_HISTORY";
+    private static final String HOME_TAG = "F_HOME";
+    private static final String SENSORS_TAG = "F_SENSORS";
+    private static final String TRAINING_TAG = "F_TRAINING";
+    private static final String HISTORY_TAG = "F_HISTORY";
 
 
     @Override
@@ -47,12 +52,14 @@ public class Main2Activity extends AppCompatActivity
         setContentView(R.layout.activity_main2);
 
         //loading the default fragment
-        loadFragment(new HomeFragment(), HOME_TAG);
+        homeFragment = new HomeFragment();
+        loadFragment(homeFragment, HOME_TAG);
 
         BottomNavigationView bottomNavigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(this);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -71,50 +78,56 @@ public class Main2Activity extends AppCompatActivity
         }
         return false;
     }
-/*
-    protected void displayFragmentA(Fragment currentFragment, Fragment nextFragment) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        if (currentFragment.isAdded()) { // if the fragment is already in container
-            ft.show(currentFragment);
+
+    protected void displayFragment(Fragment newFragment, String tag, Fragment... fragments) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        if (newFragment.isAdded()) { // if the fragment is already in container
+            fragmentTransaction.show(newFragment);
         } else { // fragment needs to be added to frame container
-            ft.add(R.id.flContainer, currentFragment, currentFragment.getTag());
+            fragmentTransaction.add(R.id.main_container, newFragment, tag);
         }
-        // Hide fragment B
-        if (nextFragment.isAdded()) { ft.hide(nextFragment); }
-        // Hide fragment C
-        if (fragmentC.isAdded()) { ft.hide(fragmentC); }
+        for (Fragment existingFragment : fragments) {
+            if (existingFragment != null && existingFragment.isAdded()) {
+                fragmentTransaction.hide(existingFragment);
+            }
+        }
+
         // Commit changes
-        ft.commit();
-    }*/
+        fragmentTransaction.commit();
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment fragment = null;
-        String tag = null;
 
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                fragment = new HomeFragment();
-                tag = HOME_TAG;
+                if (homeFragment == null) {
+                    homeFragment = new HomeFragment();
+                }
+                displayFragment(homeFragment, HOME_TAG, sensorsFragment, trainingFragment, historyFragment);
                 break;
 
             case R.id.navigation_sensors:
-                fragment = new SensorsFragment();
-                tag = SENSORS_TAG;
+                if (sensorsFragment == null) {
+                    sensorsFragment = new SensorsFragment();
+                }
+                displayFragment(sensorsFragment, SENSORS_TAG, trainingFragment, historyFragment, homeFragment);
                 break;
 
             case R.id.navigation_training:
-                fragment = new TrainingFragment();
-                tag = TRAINING_TAG;
-                break;
-
+                if (trainingFragment == null) {
+                    trainingFragment = new TrainingFragment();
+                }
+                displayFragment(trainingFragment, TRAINING_TAG, historyFragment, homeFragment, sensorsFragment);
+            break;
             case R.id.navigation_history:
-                fragment = new HistoryFragment();
-                tag = HISTORY_TAG;
+                if (historyFragment == null) {
+                    historyFragment = new HistoryFragment();
+                } else
+                    displayFragment(historyFragment, HISTORY_TAG, trainingFragment, homeFragment, sensorsFragment);
                 break;
         }
-
-        return loadFragment(fragment, tag);
+        return true;
     }
 
     @Override
@@ -146,7 +159,7 @@ public class Main2Activity extends AppCompatActivity
 
     }
 
-    private void getFbInfo(final String userID, final String userName){
+    private void getFbInfo(final String userID, final String userName) {
         FbUtils utilsFb = new FbUtils(userID, userName, this);
         utilsFb.execute();
         userActivitiesHandler = new UserActivitiesHandler(this, userName);

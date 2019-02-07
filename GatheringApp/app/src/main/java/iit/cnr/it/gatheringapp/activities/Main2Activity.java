@@ -1,27 +1,29 @@
 package iit.cnr.it.gatheringapp.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
 import iit.cnr.it.gatheringapp.R;
 import iit.cnr.it.gatheringapp.fragments.HistoryFragment;
 import iit.cnr.it.gatheringapp.fragments.HomeFragment;
 import iit.cnr.it.gatheringapp.fragments.SensorsFragment;
 import iit.cnr.it.gatheringapp.fragments.TrainingFragment;
-import iit.cnr.it.gatheringapp.sensors.Accelerometer;
+import iit.cnr.it.gatheringapp.service.BackgroundDetectedActivitiesService;
 import iit.cnr.it.gatheringapp.utils.BottomNavigationViewHelper;
-import iit.cnr.it.gatheringapp.utils.FbUtils;
 import iit.cnr.it.gatheringapp.utils.UserActivitiesHandler;
 
 public class Main2Activity extends AppCompatActivity
@@ -30,10 +32,6 @@ public class Main2Activity extends AppCompatActivity
         HistoryFragment.OnFragmentInteractionListener,
         SensorsFragment.OnFragmentInteractionListener,
         TrainingFragment.OnFragmentInteractionListener {
-
-    private TextView mTextMessage;
-    private ProfileTracker mProfileTracker;
-    private UserActivitiesHandler userActivitiesHandler = null;
 
     private HomeFragment homeFragment;
     private SensorsFragment sensorsFragment;
@@ -46,9 +44,22 @@ public class Main2Activity extends AppCompatActivity
     private static final String HISTORY_TAG = "F_HISTORY";
 
 
+    //Activity recognition
+    BroadcastReceiver broadcastReceiver;
+    public static final String BROADCAST_DETECTED_ACTIVITY = "activity_intent";
+    public UserActivitiesHandler userActivitiesHandler = null;
+    private PowerManager.WakeLock mWakeLock = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //to keep the app alive in background and also with screen off
+        final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "activityMain");
+        mWakeLock.acquire();
+
         setContentView(R.layout.activity_main2);
 
         //loading the default fragment
@@ -58,6 +69,26 @@ public class Main2Activity extends AppCompatActivity
         BottomNavigationView bottomNavigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(this);
+
+        //Activity recognition
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(BROADCAST_DETECTED_ACTIVITY)) {
+                    int type = intent.getIntExtra("type", -1);
+                    int confidence = intent.getIntExtra("confidence", 0);
+                    if (userActivitiesHandler != null)
+                        userActivitiesHandler.handleUserActivity(type, confidence, context);
+                }
+            }
+
+
+        };
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,
+                new IntentFilter(BROADCAST_DETECTED_ACTIVITY));
+        System.out.println("ON CREATE");
+        startTracking();
     }
 
     @Override
@@ -66,6 +97,70 @@ public class Main2Activity extends AppCompatActivity
         inflater.inflate(R.menu.action_menu, menu);
         return true;
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.navigation_home:
+                if (homeFragment == null) {
+                    homeFragment = new HomeFragment();
+                }
+                displayFragment(homeFragment, HOME_TAG, sensorsFragment, trainingFragment, historyFragment);
+                break;
+
+            case R.id.navigation_sensors:
+                if (sensorsFragment == null) {
+                    sensorsFragment = new SensorsFragment();
+                }
+                displayFragment(sensorsFragment, SENSORS_TAG, trainingFragment, historyFragment, homeFragment);
+                break;
+
+            case R.id.navigation_training:
+                if (trainingFragment == null) {
+                    trainingFragment = new TrainingFragment();
+                }
+                displayFragment(trainingFragment, TRAINING_TAG, historyFragment, homeFragment, sensorsFragment);
+                break;
+            case R.id.navigation_history:
+                if (historyFragment == null) {
+                    historyFragment = new HistoryFragment();
+                }
+                displayFragment(historyFragment, HISTORY_TAG, trainingFragment, homeFragment, sensorsFragment);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == iit.cnr.it.gatheringapp.R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+        this.mWakeLock.release();
+        Log.e("OnDestroy", "Main Activity destoryed!");
+
+    }
+
+
+    private void startTracking() {
+
+        Intent trackingIntent = new Intent(Main2Activity.this, BackgroundDetectedActivitiesService.class);
+        startService(trackingIntent);
+
+    }
+
 
     private boolean loadFragment(Fragment fragment, String tag) {
         //switching fragment
@@ -96,75 +191,6 @@ public class Main2Activity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.navigation_home:
-                if (homeFragment == null) {
-                    homeFragment = new HomeFragment();
-                }
-                displayFragment(homeFragment, HOME_TAG, sensorsFragment, trainingFragment, historyFragment);
-                break;
-
-            case R.id.navigation_sensors:
-                if (sensorsFragment == null) {
-                    sensorsFragment = new SensorsFragment();
-                }
-                displayFragment(sensorsFragment, SENSORS_TAG, trainingFragment, historyFragment, homeFragment);
-                break;
-
-            case R.id.navigation_training:
-                if (trainingFragment == null) {
-                    trainingFragment = new TrainingFragment();
-                }
-                displayFragment(trainingFragment, TRAINING_TAG, historyFragment, homeFragment, sensorsFragment);
-            break;
-            case R.id.navigation_history:
-                if (historyFragment == null) {
-                    historyFragment = new HistoryFragment();
-                } else
-                    displayFragment(historyFragment, HISTORY_TAG, trainingFragment, homeFragment, sensorsFragment);
-                break;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == iit.cnr.it.gatheringapp.R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    void setProfile() {
-        Profile profile;
-
-        if (Profile.getCurrentProfile() == null) mProfileTracker = new ProfileTracker() {
-            @Override
-            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                getFbInfo(currentProfile.getId(), currentProfile.getName());
-                mProfileTracker.stopTracking();
-            }
-        };
-        else {
-            profile = Profile.getCurrentProfile();
-            getFbInfo(profile.getId(), profile.getName());
-        }
-
-    }
-
-    private void getFbInfo(final String userID, final String userName) {
-        FbUtils utilsFb = new FbUtils(userID, userName, this);
-        utilsFb.execute();
-        userActivitiesHandler = new UserActivitiesHandler(this, userName);
-
-    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {

@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public UserActivitiesHandler userActivitiesHandler = null;
     private PowerManager.WakeLock mWakeLock = null;
 
-
+    //TODO REFACTORED!
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
+    //TODO REFACTORED!
     void setProfile() {
         Profile profile;
 
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
+    //TODO REFACTORED!
     private void getFbInfo(final String userID, final String userName){
         accelerometerFragment = new Accelerometer(this.getApplicationContext(), userName, this);
         FbUtils utilsFb = new FbUtils(userID, userName, this);
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 new IntentFilter(BROADCAST_DETECTED_ACTIVITY));*/
     }
 
-
+    //TODO REFACTORED!
     private void startTracking() {
 
         Intent intent1 = new Intent(MainActivity.this, BackgroundDetectedActivitiesService.class);
@@ -293,6 +293,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    //TODO REFACTORED
     @Override
     public void onDestroy() {
 

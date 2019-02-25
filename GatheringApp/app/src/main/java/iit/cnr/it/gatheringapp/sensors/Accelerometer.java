@@ -81,6 +81,9 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
     private String userName = "";
     private MainActivity activity;
 
+    public Accelerometer () {
+
+    }
 
     public Accelerometer(Context context, String userName, MainActivity _activity){
         this.context = context;
@@ -359,9 +362,5 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
             }
         }
     }
-
-
-
-
 }
 

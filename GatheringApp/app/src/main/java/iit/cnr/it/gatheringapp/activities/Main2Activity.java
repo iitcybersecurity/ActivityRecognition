@@ -149,7 +149,7 @@ public class Main2Activity extends AppCompatActivity
 
         super.onDestroy();
         this.mWakeLock.release();
-        Log.e("OnDestroy", "Main Activity destoryed!");
+        Log.e("OnDestroy", "Main Activity destroyed!");
 
     }
 

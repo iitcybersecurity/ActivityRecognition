@@ -7,11 +7,15 @@
              android:id="@+id/fragment_sensors">
 
     <!-- TODO: Update blank fragment layout -->
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/sensors_content">
+
+    </FrameLayout>
     <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Sensors"/>
-
 
 
 </FrameLayout>

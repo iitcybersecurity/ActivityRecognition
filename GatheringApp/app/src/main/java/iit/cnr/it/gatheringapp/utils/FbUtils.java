@@ -55,7 +55,8 @@ public class FbUtils extends AsyncTask<String, Void, Bitmap> {
         TextView username = this.activity.findViewById(R.id.facebook_username);
         username.setText(userName);
         ImageView profilePicture = this.activity.findViewById(R.id.facebook_profile_picture);
-        profilePicture.setImageBitmap(bitmap);
+       // TODO riattiva quando te la senti bro
+        // profilePicture.setImageBitmap(bitmap);
 //        View appBarLayout = this.activity.findViewById( R.id.app_bar_main );
 //        View appBar = appBarLayout.findViewById(R.id.appBar);
 //        View toolbar = appBar.findViewById(R.id.toolbar);

@@ -43,17 +43,18 @@ public class Sensors implements SensorEventListener {
     private String activityLabel = "";
 
 
-    public Sensors(Activity _activity, String username) {
-        this.activity = _activity;
-        this.username = username;
-
+    public Sensors() {
         //Accelerometer sensor initialization
         senSensorManager = (SensorManager) activity.getSystemService(Context.SENSOR_SERVICE);
         countSensor = senSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         senGyroscope = senSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+    }
 
-
+    public Sensors(Activity _activity, String username) {
+        super();
+        this.activity = _activity;
+        this.username = username;
     }
 
     @Override

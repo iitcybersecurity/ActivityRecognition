@@ -4,11 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.sensors.Accelerometer;
+import iit.cnr.it.gatheringapp.sensors.Sensors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +32,8 @@ public class SensorsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private Accelerometer accelerometerFragment = null;
+
 
     public SensorsFragment() {
         // Required empty public constructor
@@ -90,6 +95,13 @@ public class SensorsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    // Embeds the child fragment dynamically
+    private void insertNestedFragment(Accelerometer childFragment) {
+        childFragment = new Accelerometer();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        //transaction.replace(R.id.child_fragment_container, childFragment).commit();
     }
 
     /**

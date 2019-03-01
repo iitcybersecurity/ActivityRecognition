@@ -30,14 +30,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.facebook.*;
-import com.facebook.login.Login;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import iit.cnr.it.gatheringapp.MainActivity;
 import iit.cnr.it.gatheringapp.R;
-import iit.cnr.it.gatheringapp.sensors.Accelerometer;
-import iit.cnr.it.gatheringapp.utils.FbUtils;
-import iit.cnr.it.gatheringapp.utils.UserActivitiesHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -416,7 +411,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void goToHomepage() {
-        Intent intent = new Intent(this, Main2Activity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

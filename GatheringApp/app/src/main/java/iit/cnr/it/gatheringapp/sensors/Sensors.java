@@ -6,12 +6,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 import iit.cnr.it.gatheringapp.dbutils.DbManage;
-import iit.cnr.it.gatheringapp.MainActivity;
 import iit.cnr.it.gatheringapp.utils.Utils;
 
 import static java.lang.Math.pow;

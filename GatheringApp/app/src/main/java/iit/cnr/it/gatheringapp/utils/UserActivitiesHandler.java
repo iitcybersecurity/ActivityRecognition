@@ -5,9 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -16,8 +14,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.location.DetectedActivity;
 import iit.cnr.it.gatheringapp.R;
-import iit.cnr.it.gatheringapp.MainActivity;
-import iit.cnr.it.gatheringapp.activities.Main2Activity;
+import iit.cnr.it.gatheringapp.activities.MainActivity;
 import iit.cnr.it.gatheringapp.sensors.Sensors;
 
 import java.text.SimpleDateFormat;
@@ -92,7 +89,7 @@ public class UserActivitiesHandler {
     }
 
     public void notifyThis(String title, String message, String label) {
-        Intent notificationIntent = new Intent(activity, Main2Activity.class);
+        Intent notificationIntent = new Intent(activity, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0,
                 notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
 

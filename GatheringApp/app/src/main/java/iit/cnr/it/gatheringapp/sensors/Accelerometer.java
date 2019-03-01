@@ -26,7 +26,6 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import iit.cnr.it.gatheringapp.R;
-import iit.cnr.it.gatheringapp.MainActivity;
 import iit.cnr.it.gatheringapp.utils.Utils;
 
 

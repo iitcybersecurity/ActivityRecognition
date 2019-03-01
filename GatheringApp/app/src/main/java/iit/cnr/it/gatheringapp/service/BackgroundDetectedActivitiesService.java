@@ -22,8 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import iit.cnr.it.gatheringapp.R;
-import iit.cnr.it.gatheringapp.MainActivity;
-import iit.cnr.it.gatheringapp.activities.Main2Activity;
+import iit.cnr.it.gatheringapp.activities.MainActivity;
 
 public class BackgroundDetectedActivitiesService extends Service {
     private static final String TAG = BackgroundDetectedActivitiesService.class.getSimpleName();
@@ -58,7 +57,7 @@ public class BackgroundDetectedActivitiesService extends Service {
         requestActivityUpdatesButtonHandler(this);
 
 
-        Intent notificationIntent = new Intent(this, Main2Activity.class);
+        Intent notificationIntent = new Intent(this, MainActivity.class);
         activityIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
 

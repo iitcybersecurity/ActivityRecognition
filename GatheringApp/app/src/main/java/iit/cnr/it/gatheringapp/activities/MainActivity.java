@@ -26,7 +26,7 @@ import iit.cnr.it.gatheringapp.service.BackgroundDetectedActivitiesService;
 import iit.cnr.it.gatheringapp.utils.BottomNavigationViewHelper;
 import iit.cnr.it.gatheringapp.utils.UserActivitiesHandler;
 
-public class Main2Activity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener,
         HomeFragment.OnFragmentInteractionListener,
         HistoryFragment.OnFragmentInteractionListener,
@@ -60,7 +60,7 @@ public class Main2Activity extends AppCompatActivity
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "activityMain");
         mWakeLock.acquire();
 
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
 
         //loading the default fragment
         homeFragment = new HomeFragment();
@@ -157,7 +157,7 @@ public class Main2Activity extends AppCompatActivity
 
     private void startTracking() {
 
-        Intent trackingIntent = new Intent(Main2Activity.this, BackgroundDetectedActivitiesService.class);
+        Intent trackingIntent = new Intent(MainActivity.this, BackgroundDetectedActivitiesService.class);
         startService(trackingIntent);
 
     }

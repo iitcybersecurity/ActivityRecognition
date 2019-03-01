@@ -92,7 +92,7 @@ public class UserActivitiesHandler {
     }
 
     public void notifyThis(String title, String message, String label) {
-        Intent notificationIntent = new Intent(activity, MainActivity.class);
+        Intent notificationIntent = new Intent(activity, Main2Activity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0,
                 notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
 

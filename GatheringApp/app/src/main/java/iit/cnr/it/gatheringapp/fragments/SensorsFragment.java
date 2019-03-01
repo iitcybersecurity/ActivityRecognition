@@ -5,7 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -70,6 +73,8 @@ public class SensorsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        accelerometerFragment = new Accelerometer(getContext(), this);
+        insertNestedFragment(accelerometerFragment);
         return inflater.inflate(R.layout.fragment_sensors, container, false);
     }
 
@@ -98,11 +103,11 @@ public class SensorsFragment extends Fragment {
     }
 
     // Embeds the child fragment dynamically
-    private void insertNestedFragment(Accelerometer childFragment) {
-        childFragment = new Accelerometer();
+    private void insertNestedFragment(Fragment childFragment) {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        //transaction.replace(R.id.child_fragment_container, childFragment).commit();
+        transaction.replace(R.id.sensors_content, childFragment).commit();
     }
+
 
     /**
      * This interface must be implemented by activities that contain this

@@ -1,6 +1,7 @@
 package iit.cnr.it.gatheringapp.sensors;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -8,6 +9,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,13 +81,15 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
 
     private Context context;
     private String userName = "";
-    private MainActivity activity;
+    private Activity activity;
+    private Fragment parentFragment;
 
-    public Accelerometer () {
-
+    public Accelerometer (Context context, Fragment parentFragment) {
+        this.context = context;
+        this.parentFragment = parentFragment;
     }
 
-    public Accelerometer(Context context, String userName, MainActivity _activity){
+    public Accelerometer(Context context, String userName, Activity _activity){
         this.context = context;
         this.userName = userName;
         this.activity = _activity;
@@ -98,7 +102,7 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
 
         View v = inflater.inflate(R.layout.accelerometer_fragment,container,false);
 
-        TableLayout activitiesTable = activity.findViewById(R.id.ActivitiesTable);
+        TableLayout activitiesTable = parentFragment.getActivity().findViewById(R.id.ActivitiesTable);
         activitiesTable.setVisibility(View.INVISIBLE);
 
         //Accelerometer sensor initialization
@@ -318,9 +322,9 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
         int gyroscopeSensibility;
         int stepCounterSensibility;
         try {
-            accelerometerSensibility = Integer.getInteger(Utils.getConfigValue(this.activity.getApplicationContext(), "accelerometer.sensibility"));
-            gyroscopeSensibility = Integer.getInteger(Utils.getConfigValue(this.activity.getApplicationContext(), "gyroscope.sensibility"));
-            stepCounterSensibility = Integer.getInteger(Utils.getConfigValue(this.activity.getApplicationContext(), "step.counter.sensibility"));
+            accelerometerSensibility = Integer.getInteger(Utils.getConfigValue(parentFragment.getActivity().getApplicationContext(), "accelerometer.sensibility"));
+            gyroscopeSensibility = Integer.getInteger(Utils.getConfigValue(parentFragment.getActivity().getApplicationContext(), "gyroscope.sensibility"));
+            stepCounterSensibility = Integer.getInteger(Utils.getConfigValue(parentFragment.getActivity().getApplicationContext(), "step.counter.sensibility"));
 
         } catch (Exception exception){
             exception.printStackTrace();

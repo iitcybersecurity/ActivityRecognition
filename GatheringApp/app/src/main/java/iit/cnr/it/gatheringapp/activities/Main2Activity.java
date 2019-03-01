@@ -70,6 +70,7 @@ public class Main2Activity extends AppCompatActivity
         BottomNavigationViewHelper.removeShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(this);
 
+        userActivitiesHandler = new UserActivitiesHandler(this, "");
         //Activity recognition
         broadcastReceiver = new BroadcastReceiver() {
             @Override

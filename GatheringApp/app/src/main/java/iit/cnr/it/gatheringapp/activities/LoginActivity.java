@@ -138,10 +138,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     AccessToken oldAccessToken,
                     AccessToken currentAccessToken) {
 
-                if (currentAccessToken == null){
-                    //User logged out
-                    //createToolbar();
-                }
             }
         };
     }
@@ -408,6 +404,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void performLogout() {
+        // TODO implement generic logout
     }
 
     private void goToHomepage() {

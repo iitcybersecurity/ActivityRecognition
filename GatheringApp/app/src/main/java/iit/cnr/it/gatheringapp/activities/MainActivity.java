@@ -1,5 +1,6 @@
 package iit.cnr.it.gatheringapp.activities;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity
     private TrainingFragment trainingFragment;
     private HistoryFragment historyFragment;
 
+    private SettingsActivity settingsActivity;
+    private LoginActivity loginActivity;
+
     private static final String HOME_TAG = "F_HOME";
     private static final String SENSORS_TAG = "F_SENSORS";
     private static final String TRAINING_TAG = "F_TRAINING";
@@ -64,6 +68,9 @@ public class MainActivity extends AppCompatActivity
 
         //loading the default fragment
         homeFragment = new HomeFragment();
+        settingsActivity = new SettingsActivity();
+        loginActivity = new LoginActivity();
+
         loadFragment(homeFragment, HOME_TAG);
 
         BottomNavigationView bottomNavigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -98,6 +105,8 @@ public class MainActivity extends AppCompatActivity
         inflater.inflate(R.menu.action_menu, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -139,7 +148,12 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == iit.cnr.it.gatheringapp.R.id.action_settings) {
-            return true;
+            goToActivity(settingsActivity);
+        }
+        if (id == R.id.action_logout) {
+            //TODO implement a generic call to logout system
+            loginActivity.performLogout();
+            goToActivity(loginActivity);
         }
 
         return super.onOptionsItemSelected(item);
@@ -156,12 +170,15 @@ public class MainActivity extends AppCompatActivity
 
 
     private void startTracking() {
-
         Intent trackingIntent = new Intent(MainActivity.this, BackgroundDetectedActivitiesService.class);
         startService(trackingIntent);
 
     }
 
+    private void goToActivity(Activity activity) {
+        Intent intent = new Intent(this, activity.getClass());
+        startActivity(intent);
+    }
 
     private boolean loadFragment(Fragment fragment, String tag) {
         //switching fragment

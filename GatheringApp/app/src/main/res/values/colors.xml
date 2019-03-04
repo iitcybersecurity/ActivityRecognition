@@ -26,11 +26,7 @@
     <color name="black_trans80">#33000000</color>
 
 
-
     <color name="indicator_unselected">#4D000000</color>
-
-
-
 
 
     <color name="blue_grey">#455A64</color>
@@ -72,7 +68,6 @@
     <color name="grey">#E0E0E0</color>
 
 
-
     <color name="white_70">#B3FFFFFF</color>
 
     <color name="cyan_50">#E0F7FA</color>
@@ -80,4 +75,6 @@
     <color name="amber_50">#FFF8E1</color>
 
     <color name="purple_50">#F3E5F5</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

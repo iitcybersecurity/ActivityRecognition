@@ -38,12 +38,8 @@
         </activity>
         <activity
                 android:name=".activities.MainActivity"
-                android:label="@string/title_activity_main2">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                android:label="@string/title_activity_main">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <!-- Facebook Integration -->
@@ -66,6 +62,12 @@
         <activity
                 android:name=".activities.SettingsActivity"
                 android:label="@string/title_activity_settings">
+        </activity>
+        <activity
+                android:name=".activities.TrainingActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:label="@string/title_activity_training"
+                android:theme="@style/FullscreenTheme">
         </activity>
     </application>
 

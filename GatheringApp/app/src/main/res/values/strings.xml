@@ -37,7 +37,7 @@
     <!-- Facebook Login strings-->
     <string name="facebook_app_id">1975734206016848</string>
     <string name="fb_login_protocol_scheme">fb170729306690855</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main"> </string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -117,6 +117,10 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+    <string name="title_activity_training">TrainingActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
 </resources>

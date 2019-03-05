@@ -11,12 +11,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="top"
+            android:layout_margin="20dp">
 
 
         <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/training_choice"
+                android:layout_height="wrap_content"
+                android:id="@+id/training_choice"
                 android:text="@string/training_choice"
                 android:textAppearance="@android:style/TextAppearance.Material.Display1"
                 android:textSize="24sp"

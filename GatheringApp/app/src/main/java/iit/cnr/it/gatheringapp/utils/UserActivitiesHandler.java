@@ -127,7 +127,7 @@ public class UserActivitiesHandler {
             }
         }
 
-
+        //TODO verificare comportamento anomalo
         NotificationManager nm = (NotificationManager) this.activity.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(1337, b.build());
 

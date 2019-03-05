@@ -73,7 +73,8 @@
                         android:hint="@string/password"
                         android:id="@+id/password"
                         android:layout_centerHorizontal="true"
-                        android:layout_alignParentTop="true" android:layout_marginTop="46dp"/>
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="46dp"/>
                 <Button
                         android:text="@string/sign_in_login_button"
                         android:layout_width="180dp"
@@ -81,7 +82,8 @@
                         android:background="@drawable/rounded_button"
                         android:id="@+id/email_sign_in_button"
                         android:elevation="8dp"
-                        android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentTop="true"
                         android:layout_marginTop="92dp"/>
 
                 <Button

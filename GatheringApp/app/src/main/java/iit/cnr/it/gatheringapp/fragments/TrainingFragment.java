@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import iit.cnr.it.gatheringapp.R;
 
 /**
@@ -29,6 +31,7 @@ public class TrainingFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
 
     public TrainingFragment() {
         // Required empty public constructor
@@ -65,6 +68,9 @@ public class TrainingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+
         return inflater.inflate(R.layout.fragment_training, container, false);
     }
 
@@ -85,6 +91,7 @@ public class TrainingFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
 
     @Override
     public void onDetach() {

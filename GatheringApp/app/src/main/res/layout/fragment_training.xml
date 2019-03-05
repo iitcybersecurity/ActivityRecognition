@@ -20,7 +20,6 @@
                 android:text="@string/training_choice"
                 android:textAppearance="@android:style/TextAppearance.Material.Display1"
                 android:textSize="24sp"
-                android:paddingTop="20dp"
                 android:textAlignment="center"/>
         <LinearLayout
                 android:orientation="horizontal"
@@ -39,17 +38,6 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_weight="1">
-                <RadioGroup
-                        android:id="@+id/traniningA_button_wrapper"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/trainingA_button"
-                            android:text="@string/phone_driven_training_button"/>
-                </RadioGroup>
                 <TextView
                         android:text="@string/phone_driven_training_description"
                         android:layout_width="match_parent"
@@ -57,6 +45,12 @@
                         android:id="@+id/textView4"
                         android:textAppearance="@android:style/TextAppearance.Material.Display1"
                         android:textSize="14sp"/>
+                <Button
+                        android:text="@string/start_trainingA"
+                        android:layout_width="match_parent"
+                        android:elevation="8dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/start_trainingA"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -76,32 +70,20 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center">
-                <RadioGroup
-                        android:id="@+id/traniningB_button_wrapper"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/trainingB_button"
-                            android:text="@string/user_driven_training_button"/>
-                </RadioGroup>
                 <TextView
                         android:text="@string/user_driven_training_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/textView5"
                         android:textAppearance="@android:style/TextAppearance.Material.Display1"
                         android:textSize="14sp"/>
+                <Button
+                        android:text="@string/start_trainingB"
+                        android:layout_width="match_parent"
+                        android:elevation="8dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/start_trainingB"/>
             </LinearLayout>
         </LinearLayout>
-        <Button
-                android:text="@string/start_training"
-                android:layout_width="128dp"
-                android:background="@drawable/rounded_button"
-                android:elevation="8dp"
-                android:layout_height="30dp"
-                android:id="@+id/start_training"/>
     </LinearLayout>
 
 </FrameLayout>

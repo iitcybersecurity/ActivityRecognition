@@ -48,11 +48,11 @@
                         android:textAppearance="@android:style/TextAppearance.Material.Display1"
                         android:textSize="14sp"/>
                 <Button
-                        android:text="@string/start_trainingA"
+                        android:text="@string/start_modeA"
                         android:layout_width="match_parent"
                         android:elevation="8dp"
                         android:layout_height="40dp"
-                        android:id="@+id/start_trainingA"/>
+                        android:id="@+id/modeA_button"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -79,11 +79,11 @@
                         android:textAppearance="@android:style/TextAppearance.Material.Display1"
                         android:textSize="14sp"/>
                 <Button
-                        android:text="@string/start_trainingB"
+                        android:text="@string/start_modeB"
                         android:layout_width="match_parent"
                         android:elevation="8dp"
                         android:layout_height="40dp"
-                        android:id="@+id/start_trainingB"/>
+                        android:id="@+id/modeB_button"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

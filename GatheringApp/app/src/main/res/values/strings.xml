@@ -37,7 +37,7 @@
     <!-- Facebook Login strings-->
     <string name="facebook_app_id">1975734206016848</string>
     <string name="fb_login_protocol_scheme">fb170729306690855</string>
-    <string name="title_activity_main"> </string>
+    <string name="title_activity_main"></string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -50,11 +50,17 @@
     <string name="title_activity_training">TrainingActivity</string>
     <string name="training_choice">Choose type of training</string>
     <string name="phone_driven_training_button">Mode A</string>
-    <string name="phone_driven_training_description">Phone driven training: In this modality the phone will prompt you a series of tasks to perform while recording sensors data </string>
+    <string name="phone_driven_training_description">Phone driven training: In this mode you can leave the app in background
+        and you'll be notified when you can perform a training action
+    </string>
     <string name="user_driven_training_button">Mode B</string>
-    <string name="user_driven_training_description">User driven training: In this modality you can choose from a list of tasks which one to perform while recording sensors data</string>
-    <string name="start_trainingA">Start Mode A</string>
-    <string name="start_trainingB">Start Mode B</string>
+    <string name="user_driven_training_description">User driven training: In this mode you can choose from a list of
+       training actions which one to perform while recording sensors data
+    </string>
+    <string name="start_modeA">Start Mode A</string>
+    <string name="start_modeB">Start Mode B</string>
+    <string name="exit_training">Exit Training</string>
+    <string name="next_training">Next Training</string>
 
     <!-- Strings related to Settings -->
 
@@ -131,7 +137,6 @@
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-
 
 
 </resources>

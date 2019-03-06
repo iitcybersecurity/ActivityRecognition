@@ -1,12 +1,14 @@
 package iit.cnr.it.gatheringapp.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import iit.cnr.it.gatheringapp.R;
 
 /**
@@ -63,6 +65,7 @@ public class TrainingActivity extends AppCompatActivity {
         }
     };
     private boolean mVisible;
+    private boolean isPhoneDriven;
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
@@ -82,6 +85,7 @@ public class TrainingActivity extends AppCompatActivity {
             }
             return false;
         }
+
     };
 
     @Override
@@ -90,6 +94,9 @@ public class TrainingActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_training);
 
+        Intent intent = getIntent();
+
+        isPhoneDriven = intent.getBooleanExtra("isPhoneDriven", false);
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
@@ -106,7 +113,15 @@ public class TrainingActivity extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        Button exitButton = findViewById(R.id.exit_training_button);
+        exitButton.setOnTouchListener(mDelayHideTouchListener);
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exitTraining();
+            }
+        });
+
     }
 
     @Override
@@ -139,6 +154,11 @@ public class TrainingActivity extends AppCompatActivity {
         // Schedule a runnable to remove the status and navigation bar after a delay
         mHideHandler.removeCallbacks(mShowPart2Runnable);
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+    }
+
+    private void exitTraining() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @SuppressLint("InlinedApi")

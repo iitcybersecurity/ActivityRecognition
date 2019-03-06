@@ -7,31 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.MainActivity">
-<!--
-    &lt;!&ndash; Appbar &ndash;&gt;
 
-    <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.0">
-
-        &lt;!&ndash; Toolbar &ndash;&gt;
-
-        <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"/>
-    </android.support.design.widget.AppBarLayout>-->
-
-    <!-- Fragments Container -->
 
     <include
-            layout="@layout/main_fragment_content"
+            layout="@layout/main_activity_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toTopOf="@+id/navigation"

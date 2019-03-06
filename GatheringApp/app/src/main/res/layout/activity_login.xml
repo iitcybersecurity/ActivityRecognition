@@ -103,22 +103,11 @@
                         android:drawableStart="@drawable/com_facebook_button_icon_white"
                         android:background="@drawable/com_facebook_button_background"
                         android:layout_gravity="center_horizontal"
-                        android:layout_centerHorizontal="true" android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="85dp" />
-<!--                <Button
-                        android:textColor="#FFFFFF"
-                        android:layout_width="150dp"
-                        android:layout_height="28dp"
-                        android:drawableStart="@drawable/com_facebook_button_icon_white"
-                        android:background="@drawable/com_facebook_button_background"
-                        android:id="@+id/facebookLogin"
-                        android:elevation="8dp"
-                        android:paddingStart="67dp"
-                        android:paddingEnd="70dp"
-                        android:textSize="12sp"
-                        android:layout_centerHorizontal="true" android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="85dp"/>-->
+
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

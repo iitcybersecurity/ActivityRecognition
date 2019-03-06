@@ -119,7 +119,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mFacebookSignInButton.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                goToHomepage();
+                if(!loginResult.getAccessToken().isExpired()) {
+                    goToHomepage();
+                }
             }
 
             @Override

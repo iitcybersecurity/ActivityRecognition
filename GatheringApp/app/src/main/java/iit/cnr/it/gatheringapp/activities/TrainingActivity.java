@@ -2,20 +2,26 @@ package iit.cnr.it.gatheringapp.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.fragments.ActionFragmentList;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class TrainingActivity extends AppCompatActivity {
+public class TrainingActivity extends AppCompatActivity
+        implements ActionFragmentList.OnFragmentInteractionListener {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -66,6 +72,11 @@ public class TrainingActivity extends AppCompatActivity {
     };
     private boolean mVisible;
     private boolean isPhoneDriven;
+
+
+    private ActionFragmentList actionFragmentList;
+    private static final String ACTION_LIST_TAG = "F_ACTION_LIST";
+
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
@@ -99,8 +110,12 @@ public class TrainingActivity extends AppCompatActivity {
         isPhoneDriven = intent.getBooleanExtra("isPhoneDriven", false);
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
+        mContentView = findViewById(R.id.training_container);
 
+        if(!isPhoneDriven) {
+            actionFragmentList = new ActionFragmentList();
+            loadFragment(actionFragmentList, ACTION_LIST_TAG);
+        }
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +171,18 @@ public class TrainingActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
+    private boolean loadFragment(Fragment fragment, String tag) {
+        //switching fragment
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.training_container, fragment, tag)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
+
     private void exitTraining() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -180,5 +207,10 @@ public class TrainingActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

@@ -3,6 +3,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:layout_gravity="center"
              tools:context=".fragments.ActionFragmentList">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,5 +11,7 @@
     <android.support.v7.widget.RecyclerView
             android:id="@+id/actions_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:scrollbars="vertical"/>
 </FrameLayout>

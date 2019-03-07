@@ -10,10 +10,26 @@
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
 
-    <include
-            layout="@layout/training_activity_content"
+    <RelativeLayout
+            android:id="@+id/fullscreen_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+        <TextView
+                android:text="Choose an action to start training "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:id="@+id/fullscreen_text"
+                android:textAppearance="@android:style/TextAppearance.Material.Display1" android:textSize="24sp"
+                android:textAlignment="center"/>
+        <include
+                layout="@layout/training_activity_content"
+                android:layout_below="@id/fullscreen_text"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"/>
+    </RelativeLayout>
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->

@@ -75,6 +75,8 @@ public class TrainingActivity extends AppCompatActivity
 
 
     private ActionFragmentList actionFragmentList;
+    private Button exitButton;
+    private Button nextButton;
     private static final String ACTION_LIST_TAG = "F_ACTION_LIST";
 
     private final Runnable mHideRunnable = new Runnable() {
@@ -110,12 +112,21 @@ public class TrainingActivity extends AppCompatActivity
         isPhoneDriven = intent.getBooleanExtra("isPhoneDriven", false);
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.training_container);
+        mContentView = findViewById(R.id.fullscreen_content);
 
         if(!isPhoneDriven) {
             actionFragmentList = new ActionFragmentList();
             loadFragment(actionFragmentList, ACTION_LIST_TAG);
         }
+
+
+        // Set up the user interaction to manually show or hide the system UI.
+        mContentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggle();
+            }
+        });
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +139,9 @@ public class TrainingActivity extends AppCompatActivity
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        Button exitButton = findViewById(R.id.exit_training_button);
+        exitButton = findViewById(R.id.exit_training_button);
+        nextButton = findViewById(R.id.next_training_button);
+        nextButton.setVisibility(View.INVISIBLE);
         exitButton.setOnTouchListener(mDelayHideTouchListener);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override

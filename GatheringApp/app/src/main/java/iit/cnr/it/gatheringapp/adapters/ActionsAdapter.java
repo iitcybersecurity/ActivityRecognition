@@ -1,17 +1,20 @@
 package iit.cnr.it.gatheringapp.adapters;
 
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.model.Action;
 
 import java.util.List;
 
 public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHolder>  {
 
-    private List<String> values;
+    private List<Action> values;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -19,17 +22,19 @@ public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView txtHeader;
+        public ImageView imgHeader;
        // public TextView txtFooter;
         public View layout;
 
         public ViewHolder(View v) {
             super(v);
             layout = v;
-            txtHeader = (TextView) v.findViewById(R.id.firstLine);
+            txtHeader = (TextView) v.findViewById(R.id.action_description);
+            imgHeader = (ImageView) v.findViewById(R.id.action_preview);
         }
     }
 
-    public void add(int position, String item) {
+    public void add(int position, Action item) {
         values.add(position, item);
         notifyItemInserted(position);
     }
@@ -40,7 +45,7 @@ public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHold
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ActionsAdapter(List<String> myDataset) {
+    public ActionsAdapter(List<Action> myDataset) {
         values = myDataset;
     }
 
@@ -63,12 +68,16 @@ public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final String name = values.get(position);
-        holder.txtHeader.setText(name);
+        Action currentAction = values.get(position);
+        final String description = currentAction.getDescription();
+        final int previewId = currentAction.getPreviewId();
+        holder.txtHeader.setText(description);
+        //holder.imgHeader.setImageResource(previewId);
+
         holder.txtHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                remove(position);
+                startActionTraining();
             }
         });
 
@@ -79,6 +88,10 @@ public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHold
     @Override
     public int getItemCount() {
         return values.size();
+    }
+
+    private void startActionTraining() {
+        //TODO implement call to new action
     }
 
 }

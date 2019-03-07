@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import iit.cnr.it.gatheringapp.R;
 import iit.cnr.it.gatheringapp.adapters.ActionsAdapter;
+import iit.cnr.it.gatheringapp.model.Action;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,12 +88,9 @@ public class ActionFragmentList extends Fragment {
 
         actionsRecyclerView = (RecyclerView)getView().findViewById(R.id.actions_recycler_view);
         actionsRecyclerView.setHasFixedSize(true);
-        layoutManager = new GridLayoutManager(getContext(), col_number);
+        layoutManager = new LinearLayoutManager(getContext());
         actionsRecyclerView.setLayoutManager(layoutManager);
-        List<String> input = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            input.add("Test" + i);
-        }// define an adapter
+        List<Action> input = retrieveAvailableActions();
         mAdapter = new ActionsAdapter(input);
         actionsRecyclerView.setAdapter(mAdapter);
     }
@@ -102,6 +100,24 @@ public class ActionFragmentList extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    private List<Action> retrieveAvailableActions(){
+        String[] labels = { "Free Texting Sitting",
+                            "Free Texting Walking",
+                            "Guided Texting Sitting",
+                            "Guided Texting Walking",
+                            "Unlock From Table",
+                            "Unlock From Pocket",
+                            "Unlock From Bag",
+                            "Web Browsing"};
+        List<Action> actions = new ArrayList<>();
+        for(int i=0; i< labels.length; i++) {
+            Action newAction = new Action();
+            newAction.setDescription(labels[i]);
+            actions.add(newAction);
+        }
+        return actions;
     }
 
     @Override

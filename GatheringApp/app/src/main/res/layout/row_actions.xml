@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="6dip">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="?android:attr/listPreferredItemHeight"
+              android:padding="6dip" android:visibility="visible" android:gravity="center">
 
     <ImageView
-            android:id="@+id/icon"
+            android:id="@+id/action_preview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="6dip"
             android:contentDescription="TODO"
-            android:src="@mipmap/ic_launcher" android:layout_centerHorizontal="true"/>
+            android:src="@mipmap/ic_launcher"/>
 
     <TextView
-            android:id="@+id/firstLine"
-            android:layout_width="wrap_content"
-            android:layout_height="27dp"
+            android:id="@+id/action_description"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="Example Item"
-            android:textSize="16sp"
-            android:layout_centerHorizontal="true" android:layout_below="@+id/icon"/>
+            android:text="Example application"
+            android:textSize="18sp" android:textColor="@android:color/black"/>
 
-</RelativeLayout>
+</LinearLayout>

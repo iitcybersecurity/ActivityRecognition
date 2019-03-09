@@ -22,7 +22,8 @@ public class Utils {
             InputStream rawResource = resources.openRawResource(R.raw.config);
             Properties properties = new Properties();
             properties.load(rawResource);
-            return properties.getProperty(name);
+            String property = properties.getProperty(name);
+            return property;
         } catch (Resources.NotFoundException e) {
             Log.e("Properties", "Unable to find the config file: " + e.getMessage());
         } catch (IOException e) {

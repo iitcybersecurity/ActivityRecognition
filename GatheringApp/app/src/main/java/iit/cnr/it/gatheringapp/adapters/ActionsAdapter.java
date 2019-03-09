@@ -2,11 +2,13 @@ package iit.cnr.it.gatheringapp.adapters;
 
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import iit.cnr.it.gatheringapp.R;
 import iit.cnr.it.gatheringapp.model.Action;
 
@@ -77,7 +79,7 @@ public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHold
         holder.txtHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActionTraining();
+                startActionTraining(description);
             }
         });
 
@@ -90,8 +92,9 @@ public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHold
         return values.size();
     }
 
-    private void startActionTraining() {
+    private void startActionTraining(String chosenActionLabel) {
         //TODO implement call to new action
+        Log.i("START_ACTION", chosenActionLabel);
     }
 
 }

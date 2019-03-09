@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,13 +88,20 @@ public class ActionFragmentList extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        actionsRecyclerView = (RecyclerView)getView().findViewById(R.id.actions_recycler_view);
-        actionsRecyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
-        actionsRecyclerView.setLayoutManager(layoutManager);
-        List<Action> input = retrieveAvailableActions();
-        mAdapter = new ActionsAdapter(input);
-        actionsRecyclerView.setAdapter(mAdapter);
+        try {
+            actionsRecyclerView = (RecyclerView) getView().findViewById(R.id.actions_recycler_view);
+            actionsRecyclerView.setHasFixedSize(true);
+            layoutManager = new LinearLayoutManager(getContext());
+            actionsRecyclerView.setLayoutManager(layoutManager);
+            actionsRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                    DividerItemDecoration.VERTICAL));
+            List<Action> input = retrieveAvailableActions();
+            mAdapter = new ActionsAdapter(input);
+            actionsRecyclerView.setAdapter(mAdapter);
+        } catch (Exception e) {
+            Log.e("VIEW ERROR", "Could not create view " + view.getContentDescription());
+            e.printStackTrace();
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

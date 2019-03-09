@@ -2,7 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="?android:attr/listPreferredItemHeight"
-              android:padding="6dip" android:visibility="visible" android:gravity="center">
+              android:background="?attr/selectableItemBackground"
+              android:clickable="true"
+              android:focusable="true"
+              android:padding="6dip"
+              android:visibility="visible"
+              android:gravity="center">
 
     <ImageView
             android:id="@+id/action_preview"
@@ -14,10 +19,16 @@
 
     <TextView
             android:id="@+id/action_description"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="Example application"
-            android:textSize="18sp" android:textColor="@android:color/black"/>
-
+            android:textSize="18sp"
+            android:textColor="@android:color/black"/>
+    <View
+            android:id="@+id/action_row_divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            android:layout_weight="1" android:visibility="invisible"/>
 </LinearLayout>

@@ -149,12 +149,12 @@ public class UserActivitiesHandler {
 
             currentActivity = evaluateActivity();
 
-            if(evaluateActivity()==DetectedActivity.WALKING && walking == false){
+            if(evaluateActivity()==DetectedActivity.WALKING && !walking){
                 //writeOnDb
                 sensors.startSensors(ActivityToString(DetectedActivity.WALKING), context);
                 walking = true;
             }
-            if(evaluateActivity()!=DetectedActivity.WALKING && walking == true) {
+            if(evaluateActivity()!=DetectedActivity.WALKING && walking) {
                 //StopWriteOnDb
                 sensors.stopSensors();
                 walking = false;

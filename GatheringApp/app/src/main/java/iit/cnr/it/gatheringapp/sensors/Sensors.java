@@ -64,7 +64,7 @@ public class Sensors implements SensorEventListener {
             y_gyr = sensorEvent.values[1];
             z_gyr = sensorEvent.values[2];
 
-            prepareInfluxData(x_gyr, y_gyr, z_gyr, "gyroscope");
+            prepareInfluxData(x_gyr, y_gyr, z_gyr, "gyroscope", activityLabel);
 
         }
 
@@ -74,7 +74,7 @@ public class Sensors implements SensorEventListener {
             x_acc = sensorEvent.values[0];
             y_acc = sensorEvent.values[1];
             z_acc = sensorEvent.values[2];
-            prepareInfluxData(x_acc, y_acc, z_acc, "accelerometer");
+            prepareInfluxData(x_acc, y_acc, z_acc, "accelerometer", activityLabel);
 
             //sensorValue.setText(" " + sensorEvent.values[0]);
         }
@@ -123,7 +123,7 @@ public class Sensors implements SensorEventListener {
         Toast.makeText(this.activity, "Sensors Unregistered", Toast.LENGTH_SHORT).show();
     }
 
-    public void prepareInfluxData(float x, float y, float z, String sensor) {
+    public void prepareInfluxData(float x, float y, float z, String sensor, String activityLabel) {
         long timestamp = System.currentTimeMillis();
         String timeStamp = Long.toString(timestamp) + "000000";
         String x_to_write = "activities,sensor=" + sensor + ",device=smartphone,axes=x,activity=" + activityLabel + ",user=" + username.replaceAll("\\s", "") + " value=" + x + " " + timeStamp + "\n";
@@ -158,4 +158,5 @@ public class Sensors implements SensorEventListener {
             thread.start();
         }
     }
+
 }

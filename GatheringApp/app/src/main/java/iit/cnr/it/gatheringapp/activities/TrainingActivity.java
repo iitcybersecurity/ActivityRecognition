@@ -8,20 +8,25 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.adapters.ActionsAdapter;
+import iit.cnr.it.gatheringapp.fragments.ActionFragment;
 import iit.cnr.it.gatheringapp.fragments.ActionFragmentList;
+import iit.cnr.it.gatheringapp.model.Action;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class TrainingActivity extends AppCompatActivity
-        implements ActionFragmentList.OnFragmentInteractionListener {
+public class TrainingActivity
+        extends AppCompatActivity
+        implements ActionFragmentList.OnFragmentInteractionListener,
+        ActionsAdapter.ActionsAdapterCallback,
+        ActionFragment.OnFragmentInteractionListener {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -78,6 +83,7 @@ public class TrainingActivity extends AppCompatActivity
     private Button exitButton;
     private Button nextButton;
     private static final String ACTION_LIST_TAG = "F_ACTION_LIST";
+    private static final String ACTION_TAG = "F_ACTION";
 
     private final Runnable mHideRunnable = new Runnable() {
         @Override
@@ -184,7 +190,7 @@ public class TrainingActivity extends AppCompatActivity
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
-    private boolean loadFragment(Fragment fragment, String tag) {
+    public boolean loadFragment(Fragment fragment, String tag) {
         //switching fragment
         if (fragment != null) {
             getSupportFragmentManager()
@@ -223,7 +229,25 @@ public class TrainingActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onMethodCallback(Action action) {
+        Log.i("SUCCESS",action.getLabel());
+        Bundle args = new Bundle();
+        args.putString("label", action.getLabel());
+        args.putString("description", action.getDescription());
+        ActionFragment fragment = new ActionFragment();
+        fragment.setArguments(args);
+        loadFragment(fragment, ACTION_TAG);
+        nextButton.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void onActionListFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onActionFragmentInteraction(Uri uri) {
 
     }
 }

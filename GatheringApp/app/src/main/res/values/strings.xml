@@ -63,6 +63,11 @@
     <string name="exit_training">Exit Training</string>
     <string name="next_training">Next Training</string>
 
+    <!-- Strings related to Action training -->
+    <string name="record">Record</string>
+    <string name="please_follow_the_instructions">Please follow the instructions</string>
+    <string name="sample_title">Sample Title</string>
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
@@ -138,6 +143,7 @@
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
 
 
 </resources>

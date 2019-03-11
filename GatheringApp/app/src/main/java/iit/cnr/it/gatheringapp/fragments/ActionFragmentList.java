@@ -95,8 +95,8 @@ public class ActionFragmentList extends Fragment {
             actionsRecyclerView.setLayoutManager(layoutManager);
             actionsRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                     DividerItemDecoration.VERTICAL));
-            List<Action> input = retrieveAvailableActions();
-            mAdapter = new ActionsAdapter(input);
+            List<Action> input = retrieveAvailableActions(view.getContext());
+            mAdapter = new ActionsAdapter(input, view.getContext());
             actionsRecyclerView.setAdapter(mAdapter);
         } catch (Exception e) {
             Log.e("VIEW ERROR", "Could not create view " + view.getContentDescription());
@@ -107,12 +107,12 @@ public class ActionFragmentList extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onActionListFragmentInteraction(uri);
         }
     }
 
-    private List<Action> retrieveAvailableActions(){
-        String[] labels = { "Free Texting Sitting",
+    private List<Action> retrieveAvailableActions(Context context){
+        String[] descriptions = { "Free Texting Sitting",
                             "Free Texting Walking",
                             "Guided Texting Sitting",
                             "Guided Texting Walking",
@@ -120,10 +120,22 @@ public class ActionFragmentList extends Fragment {
                             "Unlock From Pocket",
                             "Unlock From Bag",
                             "Web Browsing"};
+        String[] labels = { "FREE_TEXT_SIT",
+                "FREE_TEXT_WALK",
+                "GUIDED_TEXT_SIT",
+                "GUIDED_TEXT_WALK",
+                "TABLE_UNLOCK",
+                "POCKET_UNLOCK",
+                "BAG_UNLOCK",
+                "WEB_BROWSING"};
+
+        String[] previewIds = { "ic_directions_walk_black_24dp"};
         List<Action> actions = new ArrayList<>();
         for(int i=0; i< labels.length; i++) {
             Action newAction = new Action();
-            newAction.setDescription(labels[i]);
+            newAction.setLabel(labels[i]);
+            newAction.setDescription(descriptions[i]);
+            newAction.setPreviewResourceName(previewIds[0]);
             actions.add(newAction);
         }
         return actions;
@@ -146,6 +158,7 @@ public class ActionFragmentList extends Fragment {
         mListener = null;
     }
 
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -158,6 +171,6 @@ public class ActionFragmentList extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onActionListFragmentInteraction(Uri uri);
     }
 }

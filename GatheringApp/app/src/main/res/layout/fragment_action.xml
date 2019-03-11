@@ -7,6 +7,12 @@
               android:gravity="center"
               android:orientation="vertical">
 
+    <TextView
+            android:text="@string/sample_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/action_title"
+            android:textAppearance="@android:style/TextAppearance.Material.Display1" android:textSize="18sp"
+            android:textAlignment="center"/>
     <ImageView
             android:src="@drawable/ic_menu_slideshow"
             android:layout_width="match_parent"
@@ -15,12 +21,18 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Please follow the instructions"
+            android:text="@string/please_follow_the_instructions"
             android:textAppearance="@android:style/TextAppearance.Material.Display1" android:textSize="24sp"
             android:textAlignment="center"/>
+    <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"/>
     <Button
-            android:text="Start"
+            android:text="@string/record"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/start_action_button"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/record_action_button"/>
 
 </LinearLayout>

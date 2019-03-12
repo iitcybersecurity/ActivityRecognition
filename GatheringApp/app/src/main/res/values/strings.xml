@@ -65,7 +65,9 @@
 
     <!-- Strings related to Action training -->
     <string name="record">Record</string>
-    <string name="please_follow_the_instructions">Please follow the instructions</string>
+    <string name="done">Done</string>
+    <string name="instructions_record">Please follow the instructions, then press RECORD to start training</string>
+    <string name="instructions_done">Please follow the instructions, then press DONE to stop training</string>
     <string name="sample_title">Sample Title</string>
 
     <!-- Strings related to Settings -->

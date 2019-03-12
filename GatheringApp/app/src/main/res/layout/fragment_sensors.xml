@@ -6,10 +6,10 @@
              tools:context=".fragments.SensorsFragment"
              android:id="@+id/fragment_sensors">
 
-    <!-- TODO: Update blank fragment layout -->
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/sensors_content">
+            android:layout_height="match_parent"
+            android:id="@+id/sensors_content">
         <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

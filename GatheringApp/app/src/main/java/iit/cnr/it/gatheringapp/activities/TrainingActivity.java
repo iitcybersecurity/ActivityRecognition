@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import iit.cnr.it.gatheringapp.R;
 import iit.cnr.it.gatheringapp.adapters.ActionsAdapter;
 import iit.cnr.it.gatheringapp.fragments.ActionFragment;
@@ -80,6 +81,7 @@ public class TrainingActivity
 
 
     private ActionFragmentList actionFragmentList;
+    private TextView fullTextTitle;
     private Button exitButton;
     private Button nextButton;
     private static final String ACTION_LIST_TAG = "F_ACTION_LIST";
@@ -119,6 +121,7 @@ public class TrainingActivity
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
+        fullTextTitle = findViewById(R.id.fullscreen_text);
 
         if(!isPhoneDriven) {
             actionFragmentList = new ActionFragmentList();
@@ -238,6 +241,7 @@ public class TrainingActivity
         fragment.setArguments(args);
         loadFragment(fragment, ACTION_TAG);
         nextButton.setVisibility(View.VISIBLE);
+        fullTextTitle.setVisibility(View.INVISIBLE);
 
     }
 

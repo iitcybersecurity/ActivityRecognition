@@ -39,6 +39,10 @@ public class Sensors implements SensorEventListener {
 
     private String activityLabel = "";
 
+    private int accelerometerSensibility;
+    private int gyroscopeSensibility;
+    private int stepCounterSensibility;
+
 
     public Sensors() {
         //Accelerometer sensor initialization
@@ -88,10 +92,7 @@ public class Sensors implements SensorEventListener {
 
     public void startSensors(String activityLabel, Context context) {
         this.activityLabel = activityLabel;
-        int accelerometerSensibility = Integer.getInteger(Utils.getConfigValue(context, "accelerometer.sensibility"));
-        int gyroscopeSensibility = Integer.getInteger(Utils.getConfigValue(context, "gyroscope.sensibility"));
-        int stepCounterSensibility = Integer.getInteger(Utils.getConfigValue(context, "step.counter.sensibility"));
-
+        initSensorsSensibility(context);
         Log.d("SENSORS",
                 "Running sensors with following values: " +
                         "Accelerometer {" + accelerometerSensibility + "} - " +
@@ -156,6 +157,21 @@ public class Sensors implements SensorEventListener {
             });
 
             thread.start();
+        }
+    }
+
+    private void initSensorsSensibility(Context context) {
+        try {
+            accelerometerSensibility = Integer.valueOf(Utils.getConfigValue(context, "accelerometer.sensibility"));
+            gyroscopeSensibility = Integer.valueOf(Utils.getConfigValue(context, "gyroscope.sensibility"));
+            stepCounterSensibility = Integer.valueOf(Utils.getConfigValue(context, "step.counter.sensibility"));
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            Log.d("SENSORS_ERROR", "Unable to retrieve configuration values, setting to default...");
+            accelerometerSensibility = SensorManager.SENSOR_DELAY_NORMAL;
+            gyroscopeSensibility = SensorManager.SENSOR_DELAY_NORMAL;
+            stepCounterSensibility = SensorManager.SENSOR_DELAY_NORMAL;
         }
     }
 

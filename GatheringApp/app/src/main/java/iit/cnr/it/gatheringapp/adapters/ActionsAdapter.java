@@ -83,8 +83,8 @@ public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHold
         final String description = currentAction.getDescription();
         final String previewResourceName = currentAction.getPreviewResourceName();
         holder.txtHeader.setText(description);
-        int id = context.getResources().getIdentifier(previewResourceName, "drawable", context.getPackageName());
-        holder.imgHeader.setImageResource(id);
+        int previewId = context.getResources().getIdentifier(previewResourceName, "drawable", context.getPackageName());
+        holder.imgHeader.setImageResource(previewId);
 
         holder.rowContainer.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -10,23 +10,43 @@
 
     <TextView
             android:text="@string/sample_title"
+            android:paddingBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/action_title"
             android:textAppearance="@android:style/TextAppearance.Material.Display1" android:textSize="24sp"
             android:textAlignment="center"/>
-    <ImageView
-            android:src="@drawable/ic_menu_slideshow"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:id="@+id/instructions_view"/>
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/instructions_record"
             android:id="@+id/instructions_record_text"
             android:textAppearance="@android:style/TextAppearance.Material.Display1"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:textAlignment="center"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:text="@string/instructions_copy"
+            android:id="@+id/instructions_copy_text"
+            android:textAppearance="@android:style/TextAppearance.Material.Display1"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:visibility="gone"/>
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="textPersonName"
+            android:hint="@string/instructions_input_placeholder"
+            android:ems="10"
+            android:id="@+id/training_copy_input"
+            android:visibility="gone"/>
+    <ImageView
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/ic_menu_slideshow"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:id="@+id/instructions_view"/>
     <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"

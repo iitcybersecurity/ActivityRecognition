@@ -62,12 +62,15 @@
     <string name="start_modeB">Start Mode B</string>
     <string name="exit_training">Exit Training</string>
     <string name="next_training">Next Training</string>
+    <string name="back_to_list">Back to list</string>
+
 
     <!-- Strings related to Action training -->
     <string name="record">Record</string>
     <string name="done">Done</string>
-    <string name="instructions_record">Please follow the instructions, then press RECORD to start training</string>
-    <string name="instructions_done">Please follow the instructions, then press DONE to stop training</string>
+    <string name="instructions_record">Please read the following instructions, then press RECORD to start training</string>
+    <string name="instructions_copy">\"Some are born great, some achieve greatness, and some have greatness thrust upon them\"</string>
+    <string name="instructions_input_placeholder">Copy the text here</string>
     <string name="sample_title">Sample Title</string>
 
     <!-- Strings related to Settings -->
@@ -145,7 +148,6 @@
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-
 
 
 </resources>

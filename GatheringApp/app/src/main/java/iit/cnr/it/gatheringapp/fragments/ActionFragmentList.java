@@ -111,31 +111,53 @@ public class ActionFragmentList extends Fragment {
         }
     }
 
-    private List<Action> retrieveAvailableActions(Context context){
-        String[] descriptions = { "Free Texting Sitting",
-                            "Free Texting Walking",
-                            "Guided Texting Sitting",
-                            "Guided Texting Walking",
-                            "Unlock From Table",
-                            "Unlock From Pocket",
-                            "Unlock From Bag",
-                            "Web Browsing"};
-        String[] labels = { "FREE_TEXT_SIT",
+    private List<Action> retrieveAvailableActions(Context context) {
+        String[] descriptions = {"Free Texting Sitting",
+                "Free Texting Walking",
+                "Guided Texting Sitting",
+                "Guided Texting Walking",
+                "Web Browsing",
+                "Unlock From Table",
+                "Unlock From Pocket",
+                "Unlock From Bag"};
+        String[] labels = {"FREE_TEXT_SIT",
                 "FREE_TEXT_WALK",
                 "GUIDED_TEXT_SIT",
                 "GUIDED_TEXT_WALK",
+                "WEB_BROWSING",
                 "TABLE_UNLOCK",
                 "POCKET_UNLOCK",
-                "BAG_UNLOCK",
-                "WEB_BROWSING"};
+                "BAG_UNLOCK"};
 
-        String[] previewIds = { "ic_directions_walk_black_24dp"};
+        String[] previewIds = {
+                "ic_baseline_textsms_24px",
+                "ic_baseline_textsms_24px",
+                "ic_baseline_textsms_24px",
+                "ic_baseline_textsms_24px",
+                "ic_baseline_public_24px",
+                "ic_baseline_screen_lock_portrait_24px",
+                "ic_baseline_screen_lock_portrait_24px",
+                "ic_baseline_screen_lock_portrait_24px"
+        };
+
+        String[] instructionsIds = {
+                "free_text_sitting",
+                "free_text_sitting",
+                "free_text_sitting",
+                "free_text_sitting",
+                "free_text_sitting",
+                "free_text_sitting",
+                "free_text_sitting",
+                "free_text_sitting",
+                "free_text_sitting"
+        };
         List<Action> actions = new ArrayList<>();
-        for(int i=0; i< labels.length; i++) {
+        for (int i = 0; i < labels.length; i++) {
             Action newAction = new Action();
             newAction.setLabel(labels[i]);
             newAction.setDescription(descriptions[i]);
-            newAction.setPreviewResourceName(previewIds[0]);
+            newAction.setPreviewResourceName(previewIds[i]);
+            newAction.setInstructionsResourceName(instructionsIds[i]);
             actions.add(newAction);
         }
         return actions;

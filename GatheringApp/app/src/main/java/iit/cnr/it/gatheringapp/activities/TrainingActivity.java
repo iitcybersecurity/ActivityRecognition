@@ -84,6 +84,7 @@ public class TrainingActivity
     private TextView fullTextTitle;
     private Button exitButton;
     private Button nextButton;
+    private Button backToList;
     private static final String ACTION_LIST_TAG = "F_ACTION_LIST";
     private static final String ACTION_TAG = "F_ACTION";
 
@@ -124,8 +125,7 @@ public class TrainingActivity
         fullTextTitle = findViewById(R.id.fullscreen_text);
 
         if(!isPhoneDriven) {
-            actionFragmentList = new ActionFragmentList();
-            loadFragment(actionFragmentList, ACTION_LIST_TAG);
+            initActionList();
         }
 
 
@@ -150,12 +150,23 @@ public class TrainingActivity
         // while interacting with the UI.
         exitButton = findViewById(R.id.exit_training_button);
         nextButton = findViewById(R.id.next_training_button);
+        backToList = findViewById(R.id.action_list_training_button);
         nextButton.setVisibility(View.INVISIBLE);
+        backToList.setVisibility(View.INVISIBLE);
         exitButton.setOnTouchListener(mDelayHideTouchListener);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 exitTraining();
+            }
+        });
+        backToList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initActionList();
+                fullTextTitle.setVisibility(View.VISIBLE);
+                nextButton.setVisibility(View.INVISIBLE);
+                backToList.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -191,6 +202,11 @@ public class TrainingActivity
         // Schedule a runnable to remove the status and navigation bar after a delay
         mHideHandler.removeCallbacks(mShowPart2Runnable);
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+    }
+
+    private void initActionList() {
+        actionFragmentList = new ActionFragmentList();
+        loadFragment(actionFragmentList, ACTION_LIST_TAG);
     }
 
     public boolean loadFragment(Fragment fragment, String tag) {
@@ -237,13 +253,17 @@ public class TrainingActivity
         Bundle args = new Bundle();
         args.putString("label", action.getLabel());
         args.putString("description", action.getDescription());
+        args.putString("instructions", action.getInstructionsResourceName());
         ActionFragment fragment = new ActionFragment();
         fragment.setArguments(args);
         loadFragment(fragment, ACTION_TAG);
         nextButton.setVisibility(View.VISIBLE);
+        backToList.setVisibility(View.VISIBLE);
         fullTextTitle.setVisibility(View.INVISIBLE);
 
     }
+
+
 
     @Override
     public void onActionListFragmentInteraction(Uri uri) {

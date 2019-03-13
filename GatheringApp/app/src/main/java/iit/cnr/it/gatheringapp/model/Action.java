@@ -6,6 +6,7 @@ public class Action {
     private String label;
     private String description;
     private String previewResourceName;
+    private String instructionsResourceName;
 
     public String getLabel() {
         return label;
@@ -29,5 +30,13 @@ public class Action {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getInstructionsResourceName() {
+        return instructionsResourceName;
+    }
+
+    public void setInstructionsResourceName(String instructionsResourceName) {
+        this.instructionsResourceName = instructionsResourceName;
     }
 }

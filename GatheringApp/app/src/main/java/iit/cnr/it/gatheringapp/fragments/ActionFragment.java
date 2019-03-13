@@ -5,16 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.*;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.Option;
+import com.bumptech.glide.request.RequestOptions;
 import iit.cnr.it.gatheringapp.R;
 import iit.cnr.it.gatheringapp.sensors.Sensors;
 import iit.cnr.it.gatheringapp.utils.Utils;
@@ -36,18 +35,22 @@ public class ActionFragment extends Fragment {
 
     private static final String LABEL = "label";
     private static final String DESCRIPTION = "description";
+    private static final String INSTRUCTIONS = "instructions";
 
     private Sensors sensors;
     private OnFragmentInteractionListener mListener;
     CountDownTimer mCountDownTimer;
     private TextView mTitleText;
     private TextView mInstructionsText;
+    private TextView mInstructionsCopy;
+    private EditText mTrainingInput;
     private ProgressBar mProgressBar;
     private ImageView mInstructionsView;
     private Button mRecordButton;
     private Button mDoneButton;
     private String label;
     private String description;
+    private String instructions;
     private int timerCounter;
     private int millisInFuture;
     private int countDownInterval;
@@ -65,11 +68,12 @@ public class ActionFragment extends Fragment {
      * @return A new instance of fragment ActionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ActionFragment newInstance(String label, String description) {
+    public static ActionFragment newInstance(String label, String description, String instructions) {
         ActionFragment fragment = new ActionFragment();
         Bundle args = new Bundle();
         args.putString(LABEL, label);
         args.putString(DESCRIPTION, description);
+        args.putString(INSTRUCTIONS, instructions);
         fragment.setArguments(args);
         return fragment;
     }
@@ -80,6 +84,7 @@ public class ActionFragment extends Fragment {
         if (getArguments() != null) {
             label = getArguments().getString(LABEL);
             description = getArguments().getString(DESCRIPTION);
+            instructions = getArguments().getString(INSTRUCTIONS);
         }
     }
 
@@ -95,6 +100,8 @@ public class ActionFragment extends Fragment {
         mTitleText = fragmentView.findViewById(R.id.action_title);
         mTitleText.setText(description);
         mInstructionsText = fragmentView.findViewById(R.id.instructions_record_text);
+        mInstructionsCopy = fragmentView.findViewById(R.id.instructions_copy_text);
+        mTrainingInput = fragmentView.findViewById(R.id.training_copy_input);
 
 
         // Setup buttons and visibility
@@ -115,39 +122,11 @@ public class ActionFragment extends Fragment {
         mDoneButton.setVisibility(View.GONE);
 
         // Setup Progress Bar and timer
-        timerCounter = 0;
-        millisInFuture = 60000;//Integer.valueOf(Utils.getConfigValue(context, "timer.counter"));
-        countDownInterval = 1000;//Integer.valueOf(Utils.getConfigValue(context, "timer.interval"));
-        mProgressBar = fragmentView.findViewById(R.id.action_progress_bar);
-        mProgressBar.setProgress(timerCounter);
-        mProgressBar.setVisibility(View.INVISIBLE);
-        mCountDownTimer=new CountDownTimer(millisInFuture,countDownInterval) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                Log.v("Log_tag", "Tick of Progress"+ timerCounter+ millisUntilFinished);
-                timerCounter++;
-                mProgressBar.setProgress((int)timerCounter*100/(millisInFuture/countDownInterval));
-
-            }
-
-            @Override
-            public void onFinish() {
-                //Do what you want
-                timerCounter++;
-                mProgressBar.setProgress(100);
-                stopAction();
-            }
-        };
+        setupProgressBarTimer(fragmentView);
 
         // Setup instructions gif
-        mInstructionsView = fragmentView.findViewById(R.id.instructions_view);
-        try {
-            Option.memory("com.bumptech.glide.load.model.stream.HttpGlideUrlLoader.Timeout", 2500).update(20_000, MessageDigest.getInstance("SHA-512"));
-            Glide.with(this).load(R.drawable.ic_notifications_black_24dp).into(mInstructionsView);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setupInstructionsGif(fragmentView, context);
+
         return fragmentView;
     }
 
@@ -179,22 +158,25 @@ public class ActionFragment extends Fragment {
         mDoneButton.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.VISIBLE);
         mRecordButton.setVisibility(View.GONE);
-        mInstructionsText.setText(R.string.instructions_done);
+        mInstructionsText.setVisibility(View.INVISIBLE);
+        mInstructionsView.setVisibility(View.INVISIBLE);
 
         try {
             sensors.startSensors(label, context);
-            //TODO add timer
             mCountDownTimer.start();
 
-            if(label.contains("TEXT")) {
+            if(label.matches("TEXT")) {
                 Log.i("INFO", "I should present and input text box ");
+                mInstructionsView.setVisibility(View.GONE);
+                mInstructionsCopy.setVisibility(View.VISIBLE);
+                mTrainingInput.setVisibility(View.VISIBLE);
             }
-            if (label.contains("UNLOCK")) {
+            if (label.matches("UNLOCK")) {
                 Log.i("INFO", "I should check if the phone gets locked and the send a notification 10 seconds later");
                 sendSoundNotification();
             }
 
-            if (label.contains("WEB")) {
+            if (label.matches("WEB")) {
                 Log.i("INFO", "I should open the browser and wait 40 sec, then notify the user to come back");
             }
             sensors.stopSensors();
@@ -208,8 +190,11 @@ public class ActionFragment extends Fragment {
         mDoneButton.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.INVISIBLE);
         mRecordButton.setVisibility(View.VISIBLE);
-        mInstructionsText.setText(R.string.instructions_record);
-
+        mInstructionsText.setVisibility(View.VISIBLE);
+        mInstructionsView.setVisibility(View.VISIBLE);
+        mInstructionsCopy.setVisibility(View.GONE);
+        mTrainingInput.setVisibility(View.GONE);
+        mTrainingInput.setText(null);
         try {
             sensors.stopSensors();
             mCountDownTimer.cancel();
@@ -225,7 +210,53 @@ public class ActionFragment extends Fragment {
 
     }
 
+    private void setupInstructionsGif(View fragmentView, Context context) {
+        mInstructionsView = fragmentView.findViewById(R.id.instructions_view);
+        int instructionsId = context.getResources().getIdentifier(instructions, "raw", context.getPackageName());
 
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+        try {
+            Option.memory("com.bumptech.glide.load.model.stream.HttpGlideUrlLoader.Timeout", 2500).update(20_000, MessageDigest.getInstance("SHA-512"));
+            Glide.with(this)
+                    .load(instructionsId)
+                    .apply(RequestOptions.circleCropTransform())
+                    .placeholder(circularProgressDrawable)
+                    .into(mInstructionsView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupProgressBarTimer(View fragmentView) {
+        timerCounter = 0;
+        millisInFuture = 60000;//Integer.valueOf(Utils.getConfigValue(context, "timer.counter"));
+        countDownInterval = 1000;//Integer.valueOf(Utils.getConfigValue(context, "timer.interval"));
+        mProgressBar = fragmentView.findViewById(R.id.action_progress_bar);
+        mProgressBar.setProgress(timerCounter);
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mCountDownTimer=new CountDownTimer(millisInFuture,countDownInterval) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.v("Log_tag", "Tick of Progress"+ timerCounter+ millisUntilFinished);
+                timerCounter++;
+                mProgressBar.setProgress((int)timerCounter*100/(millisInFuture/countDownInterval));
+
+            }
+
+            @Override
+            public void onFinish() {
+                //Do what you want
+                timerCounter++;
+                mProgressBar.setProgress(100);
+                stopAction();
+            }
+        };
+
+    }
 
     /**
      * This interface must be implemented by activities that contain this

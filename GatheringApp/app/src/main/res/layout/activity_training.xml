@@ -53,12 +53,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/exit_training"/>
-            <View
-                    android:id="@+id/divider"
+            <Button android:id="@+id/action_list_training_button"
+                    style="?metaButtonBarButtonStyle"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/listDivider"
-                    android:layout_weight="1"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/back_to_list"/>
             <Button android:id="@+id/next_training_button"
                     style="?metaButtonBarButtonStyle"
                     android:layout_width="0dp"

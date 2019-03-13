@@ -69,9 +69,14 @@
     <string name="record">Record</string>
     <string name="done">Done</string>
     <string name="instructions_record">Please read the following instructions, then press RECORD to start training</string>
-    <string name="instructions_copy">\"Some are born great, some achieve greatness, and some have greatness thrust upon them\"</string>
+    <string name="instructions_container">\"Some are born great, some achieve greatness, and some have greatness thrust upon them\"</string>
     <string name="instructions_input_placeholder">Copy the text here</string>
     <string name="sample_title">Sample Title</string>
+    <string name="lock_now">Now please lock your phone</string>
+    <string name="lock_bag"> and put it in your bag.</string>
+    <string name="lock_pocket"> and put it in your pocket.</string>
+    <string name="lock_table"> and put it in on the table.</string>
+
 
     <!-- Strings related to Settings -->
 

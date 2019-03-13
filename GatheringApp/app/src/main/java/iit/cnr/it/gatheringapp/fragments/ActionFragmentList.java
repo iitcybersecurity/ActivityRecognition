@@ -112,7 +112,8 @@ public class ActionFragmentList extends Fragment {
     }
 
     private List<Action> retrieveAvailableActions(Context context) {
-        String[] descriptions = {"Free Texting Sitting",
+        String[] descriptions = {
+                "Free Texting Sitting",
                 "Free Texting Walking",
                 "Guided Texting Sitting",
                 "Guided Texting Walking",
@@ -120,7 +121,8 @@ public class ActionFragmentList extends Fragment {
                 "Unlock From Table",
                 "Unlock From Pocket",
                 "Unlock From Bag"};
-        String[] labels = {"FREE_TEXT_SIT",
+        String[] labels = {
+                "FREE_TEXT_SIT",
                 "FREE_TEXT_WALK",
                 "GUIDED_TEXT_SIT",
                 "GUIDED_TEXT_WALK",
@@ -142,14 +144,13 @@ public class ActionFragmentList extends Fragment {
 
         String[] instructionsIds = {
                 "free_text_sitting",
-                "free_text_sitting",
-                "free_text_sitting",
-                "free_text_sitting",
-                "free_text_sitting",
-                "free_text_sitting",
-                "free_text_sitting",
-                "free_text_sitting",
-                "free_text_sitting"
+                "free_text_walking",
+                "guided_text_sitting",
+                "guided_text_walking",
+                "browse_web",
+                "unlock_table",
+                "unlock_pocket",
+                "unlock_bag"
         };
         List<Action> actions = new ArrayList<>();
         for (int i = 0; i < labels.length; i++) {

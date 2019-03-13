@@ -9,7 +9,8 @@
     <!-- TODO: Update blank fragment layout -->
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/linearLayout">
+            android:layout_height="match_parent"
+            android:id="@+id/linearLayout">
         <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/facebook_profile_picture"
                 android:layout_width="0dp"

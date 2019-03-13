@@ -54,11 +54,6 @@
                 android:theme="@android:style/Theme.Translucent.NoTitleBar"
                 tools:replace="android:theme"/>
 
-        <service
-                android:name=".service.DetectedActivitiesIntentService"
-                android:exported="false"/>
-        <service android:name=".service.BackgroundDetectedActivitiesService"/>
-
         <activity
                 android:name=".activities.SettingsActivity"
                 android:label="@string/title_activity_settings">

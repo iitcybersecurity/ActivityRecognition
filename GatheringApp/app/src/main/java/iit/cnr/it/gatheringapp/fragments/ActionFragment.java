@@ -1,10 +1,13 @@
 package iit.cnr.it.gatheringapp.fragments;
 
+import android.app.KeyguardManager;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.CountDownTimer;
+import android.os.*;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.CircularProgressDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +19,6 @@ import com.bumptech.glide.load.Option;
 import com.bumptech.glide.request.RequestOptions;
 import iit.cnr.it.gatheringapp.R;
 import iit.cnr.it.gatheringapp.sensors.Sensors;
-import iit.cnr.it.gatheringapp.utils.Utils;
 
 import java.security.MessageDigest;
 
@@ -36,13 +38,15 @@ public class ActionFragment extends Fragment {
     private static final String LABEL = "label";
     private static final String DESCRIPTION = "description";
     private static final String INSTRUCTIONS = "instructions";
+    private static final String CHANNEL_ID = "UNLOCK_NOTIFICATIONS";
 
     private Sensors sensors;
+    private Context context;
     private OnFragmentInteractionListener mListener;
     CountDownTimer mCountDownTimer;
     private TextView mTitleText;
     private TextView mInstructionsText;
-    private TextView mInstructionsCopy;
+    private TextView mInstructionsContainer;
     private EditText mTrainingInput;
     private ProgressBar mProgressBar;
     private ImageView mInstructionsView;
@@ -54,6 +58,10 @@ public class ActionFragment extends Fragment {
     private int timerCounter;
     private int millisInFuture;
     private int countDownInterval;
+    boolean isUnlockAction;
+    boolean isNotificationScheduled;
+    boolean isScreenAwake;
+    boolean isPhoneLocked;
 
     public ActionFragment() {
         // Required empty public constructor
@@ -63,11 +71,11 @@ public class ActionFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param label Parameter 1.
-     * @param description Parameter 2.
+     * @param label the label of the action
+     * @param description an human readable description.
+     * @param instructions the id of the instructions gif.
      * @return A new instance of fragment ActionFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ActionFragment newInstance(String label, String description, String instructions) {
         ActionFragment fragment = new ActionFragment();
         Bundle args = new Bundle();
@@ -93,14 +101,14 @@ public class ActionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragmentView = inflater.inflate(R.layout.fragment_action, container, false);
-        final Context context = fragmentView.getContext();
+        context = fragmentView.getContext();
         sensors = new Sensors(getActivity(), "");
 
         // Setup text
         mTitleText = fragmentView.findViewById(R.id.action_title);
         mTitleText.setText(description);
         mInstructionsText = fragmentView.findViewById(R.id.instructions_record_text);
-        mInstructionsCopy = fragmentView.findViewById(R.id.instructions_copy_text);
+        mInstructionsContainer = fragmentView.findViewById(R.id.instructions_copy_text);
         mTrainingInput = fragmentView.findViewById(R.id.training_copy_input);
 
 
@@ -165,18 +173,36 @@ public class ActionFragment extends Fragment {
             sensors.startSensors(label, context);
             mCountDownTimer.start();
 
-            if(label.matches("TEXT")) {
+
+
+            if(label.matches(".*TEXT.*")) {
                 Log.i("INFO", "I should present and input text box ");
                 mInstructionsView.setVisibility(View.GONE);
-                mInstructionsCopy.setVisibility(View.VISIBLE);
+                mInstructionsContainer.setVisibility(View.VISIBLE);
+                mInstructionsContainer.setText(R.string.instructions_container);
                 mTrainingInput.setVisibility(View.VISIBLE);
             }
-            if (label.matches("UNLOCK")) {
+            if (label.matches(".*UNLOCK")) {
                 Log.i("INFO", "I should check if the phone gets locked and the send a notification 10 seconds later");
-                sendSoundNotification();
+                mInstructionsView.setVisibility(View.GONE);
+                mInstructionsContainer.setVisibility(View.VISIBLE);
+                String displayedText;
+                if(label.matches("BAG.*")) {
+                    displayedText = getString(R.string.lock_now) + " " + getString(R.string.lock_bag);
+                    mInstructionsContainer.setText(displayedText);
+                }
+                if(label.matches("POCKET.*")) {
+                    displayedText = getString(R.string.lock_now) + " " + getString(R.string.lock_pocket);
+                    mInstructionsContainer.setText(displayedText);
+                }
+                if(label.matches("TABLE.*")) {
+                    displayedText = getString(R.string.lock_now) + " " + getString(R.string.lock_table);
+                    mInstructionsContainer.setText(displayedText);
+                }
+                isUnlockAction = true;
             }
 
-            if (label.matches("WEB")) {
+            if (label.matches(".*WEB.*")) {
                 Log.i("INFO", "I should open the browser and wait 40 sec, then notify the user to come back");
             }
             //sensors.stopSensors();
@@ -197,9 +223,10 @@ public class ActionFragment extends Fragment {
         mRecordButton.setVisibility(View.VISIBLE);
         mInstructionsText.setVisibility(View.VISIBLE);
         mInstructionsView.setVisibility(View.VISIBLE);
-        mInstructionsCopy.setVisibility(View.GONE);
+        mInstructionsContainer.setVisibility(View.GONE);
         mTrainingInput.setVisibility(View.GONE);
         mTrainingInput.setText(null);
+        isNotificationScheduled = false;
         try {
             sensors.stopSensors(sensors);
 
@@ -208,8 +235,17 @@ public class ActionFragment extends Fragment {
         }
     }
 
-    private void sendSoundNotification() {
-
+    private void scheduleSoundNotification() {
+        isNotificationScheduled = true;
+        Log.i("SCHEDULED", "Unlock notification scheduled!");
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+               sendUnlockNotification();
+               isNotificationScheduled = false;
+            }
+        }, 10000);
     }
 
     private void setupInstructionsGif(View fragmentView, Context context) {
@@ -232,6 +268,24 @@ public class ActionFragment extends Fragment {
         }
     }
 
+    private void sendUnlockNotification() {
+        //Define Notification Manager
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        //Define sound URI
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentTitle(description)
+                .setContentText("Unlock your phone and press DONE")
+                .setSound(soundUri) //This sets the sound to play
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        //Display notification
+        notificationManager.notify(666, mBuilder.build());
+    }
+
     private void setupProgressBarTimer(View fragmentView) {
         timerCounter = 0;
         millisInFuture = 60000;//Integer.valueOf(Utils.getConfigValue(context, "timer.counter"));
@@ -246,6 +300,16 @@ public class ActionFragment extends Fragment {
                 Log.v("Log_tag", "Tick of Progress"+ timerCounter+ millisUntilFinished);
                 timerCounter++;
                 mProgressBar.setProgress((int)timerCounter*100/(millisInFuture/countDownInterval));
+                if(isUnlockAction && !isNotificationScheduled) {
+                    KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+                    isPhoneLocked = myKM.inKeyguardRestrictedInputMode();
+
+                    PowerManager powerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+                    isScreenAwake = (Build.VERSION.SDK_INT < 20? powerManager.isScreenOn():powerManager.isInteractive());
+                    if(isPhoneLocked || !isScreenAwake) {
+                        scheduleSoundNotification();
+                    }
+                }
 
             }
 

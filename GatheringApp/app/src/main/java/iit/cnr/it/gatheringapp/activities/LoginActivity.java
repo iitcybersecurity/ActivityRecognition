@@ -414,6 +414,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void goToHomepage() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("username", "Michele Romani");
         startActivity(intent);
     }
 }

@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment {
         mListener = null;
     }
 
-    void setProfile() {
+    private void setProfile() {
         Profile profile;
 
         if (Profile.getCurrentProfile() == null) mProfileTracker = new ProfileTracker() {
@@ -130,7 +130,6 @@ public class HomeFragment extends Fragment {
         FbUtils utilsFb = new FbUtils(userID, userName, getActivity());
         utilsFb.execute();
         userActivitiesHandler = new UserActivitiesHandler(getActivity(), userName);
-
     }
 
     /**
@@ -147,6 +146,4 @@ public class HomeFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-
 }

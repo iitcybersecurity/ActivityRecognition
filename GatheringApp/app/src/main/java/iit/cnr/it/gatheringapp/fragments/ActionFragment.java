@@ -38,6 +38,7 @@ public class ActionFragment extends Fragment {
     private static final String LABEL = "label";
     private static final String DESCRIPTION = "description";
     private static final String INSTRUCTIONS = "instructions";
+    private static final String USERNAME = "userName";
     private static final String CHANNEL_ID = "UNLOCK_NOTIFICATIONS";
 
     private Sensors sensors;
@@ -55,6 +56,7 @@ public class ActionFragment extends Fragment {
     private String label;
     private String description;
     private String instructions;
+    private String userName;
     private int timerCounter;
     private int millisInFuture;
     private int countDownInterval;
@@ -76,12 +78,13 @@ public class ActionFragment extends Fragment {
      * @param instructions the id of the instructions gif.
      * @return A new instance of fragment ActionFragment.
      */
-    public static ActionFragment newInstance(String label, String description, String instructions) {
+    public static ActionFragment newInstance(String label, String description, String instructions, String userName) {
         ActionFragment fragment = new ActionFragment();
         Bundle args = new Bundle();
         args.putString(LABEL, label);
         args.putString(DESCRIPTION, description);
         args.putString(INSTRUCTIONS, instructions);
+        args.putString(USERNAME, userName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -93,6 +96,7 @@ public class ActionFragment extends Fragment {
             label = getArguments().getString(LABEL);
             description = getArguments().getString(DESCRIPTION);
             instructions = getArguments().getString(INSTRUCTIONS);
+            userName = getArguments().getString(USERNAME);
         }
     }
 
@@ -102,7 +106,7 @@ public class ActionFragment extends Fragment {
         // Inflate the layout for this fragment
         View fragmentView = inflater.inflate(R.layout.fragment_action, container, false);
         context = fragmentView.getContext();
-        sensors = new Sensors(getActivity(), "");
+        sensors = new Sensors(getActivity(), userName);
 
         // Setup text
         mTitleText = fragmentView.findViewById(R.id.action_title);

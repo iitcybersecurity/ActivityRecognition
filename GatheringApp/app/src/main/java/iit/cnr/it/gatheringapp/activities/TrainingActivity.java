@@ -13,6 +13,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import iit.cnr.it.gatheringapp.R;
 import iit.cnr.it.gatheringapp.adapters.ActionsAdapter;
 import iit.cnr.it.gatheringapp.fragments.ActionFragment;
@@ -81,6 +83,8 @@ public class TrainingActivity
 
 
     private ActionFragmentList actionFragmentList;
+    private String userName;
+    private ProfileTracker mProfileTracker;
     private TextView fullTextTitle;
     private Button exitButton;
     private Button nextButton;
@@ -254,6 +258,7 @@ public class TrainingActivity
         args.putString("label", action.getLabel());
         args.putString("description", action.getDescription());
         args.putString("instructions", action.getInstructionsResourceName());
+        args.putString("userName", getUserName());
         ActionFragment fragment = new ActionFragment();
         fragment.setArguments(args);
         loadFragment(fragment, ACTION_TAG);
@@ -263,7 +268,23 @@ public class TrainingActivity
 
     }
 
+    private String getUserName() {
+            Profile profile;
 
+            if (Profile.getCurrentProfile() == null) mProfileTracker = new ProfileTracker() {
+                @Override
+                protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+
+                    mProfileTracker.stopTracking();
+                    userName = currentProfile.getName();
+                }
+            };
+            else {
+                profile = Profile.getCurrentProfile();
+                userName = profile.getName();
+            }
+            return userName;
+    }
 
     @Override
     public void onActionListFragmentInteraction(Uri uri) {

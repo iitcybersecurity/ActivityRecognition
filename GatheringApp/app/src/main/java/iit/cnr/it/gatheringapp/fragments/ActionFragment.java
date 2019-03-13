@@ -179,7 +179,7 @@ public class ActionFragment extends Fragment {
             if (label.matches("WEB")) {
                 Log.i("INFO", "I should open the browser and wait 40 sec, then notify the user to come back");
             }
-            sensors.stopSensors();
+            //sensors.stopSensors();
             Log.i("SUCCESS", "Recorded activity: " + label);
         } catch (Exception e) {
             e.printStackTrace();
@@ -187,6 +187,11 @@ public class ActionFragment extends Fragment {
     }
 
     private void stopAction() {
+        mCountDownTimer.cancel();
+        mCountDownTimer.onFinish();
+    }
+
+    private void resetComponents() {
         mDoneButton.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.INVISIBLE);
         mRecordButton.setVisibility(View.VISIBLE);
@@ -196,10 +201,7 @@ public class ActionFragment extends Fragment {
         mTrainingInput.setVisibility(View.GONE);
         mTrainingInput.setText(null);
         try {
-            sensors.stopSensors();
-            mCountDownTimer.cancel();
-            mProgressBar.setProgress(0);
-            timerCounter = 0;
+            sensors.stopSensors(sensors);
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -252,10 +254,15 @@ public class ActionFragment extends Fragment {
                 //Do what you want
                 timerCounter++;
                 mProgressBar.setProgress(100);
-                stopAction();
+                clearProgressBarTimer();
+                resetComponents();
             }
         };
+    }
 
+    private void clearProgressBarTimer() {
+        mProgressBar.setProgress(0);
+        timerCounter = 0;
     }
 
     /**

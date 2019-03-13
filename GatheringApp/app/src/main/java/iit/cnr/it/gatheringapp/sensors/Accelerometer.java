@@ -274,9 +274,9 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
 
     }
 
-    public void stopSensors() {
+    public void stopSensors(Accelerometer sensor) {
         if (run == true)
-            senSensorManager.unregisterListener(this);
+            senSensorManager.unregisterListener(sensor);
         run = false;
     }
 
@@ -338,7 +338,7 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
 
             } else {
                 b.setText("Start");
-                stopSensors();
+                stopSensors(this);
             }
         }
     }

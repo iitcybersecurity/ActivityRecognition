@@ -156,7 +156,7 @@ public class UserActivitiesHandler {
             }
             if(evaluateActivity()!=DetectedActivity.WALKING && walking) {
                 //StopWriteOnDb
-                sensors.stopSensors();
+                sensors.stopSensors(sensors);
                 walking = false;
             }
 

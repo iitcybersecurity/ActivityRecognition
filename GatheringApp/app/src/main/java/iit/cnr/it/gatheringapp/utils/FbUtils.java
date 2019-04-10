@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import iit.cnr.it.gatheringapp.R;
 
 import java.io.IOException;
@@ -22,8 +24,9 @@ import java.net.URL;
 @SuppressLint("StaticFieldLeak")
 public class FbUtils extends AsyncTask<String, Void, Bitmap> {
     private String userID;
-    private String userName;
+    private static String userName;
     private Activity activity;
+    private static ProfileTracker mProfileTracker;
 
     public FbUtils(String userId, String userName, Activity _activity){
         this.userID = userId;
@@ -82,5 +85,23 @@ public class FbUtils extends AsyncTask<String, Void, Bitmap> {
             return null;
         }
     }
+
+    public static String getUserName() {
+        Profile profile;
+
+        if (Profile.getCurrentProfile() == null) mProfileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                mProfileTracker.stopTracking();
+                userName = currentProfile.getName();
+            }
+        };
+        else {
+            profile = Profile.getCurrentProfile();
+            userName = profile.getName();
+        }
+        return userName;
+    }
+
 }
 

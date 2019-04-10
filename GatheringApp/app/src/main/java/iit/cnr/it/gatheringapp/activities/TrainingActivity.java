@@ -20,6 +20,7 @@ import iit.cnr.it.gatheringapp.adapters.ActionsAdapter;
 import iit.cnr.it.gatheringapp.fragments.ActionFragment;
 import iit.cnr.it.gatheringapp.fragments.ActionFragmentList;
 import iit.cnr.it.gatheringapp.model.Action;
+import iit.cnr.it.gatheringapp.utils.FbUtils;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -258,7 +259,7 @@ public class TrainingActivity
         args.putString("label", action.getLabel());
         args.putString("description", action.getDescription());
         args.putString("instructions", action.getInstructionsResourceName());
-        args.putString("userName", getUserName());
+        args.putString("userName", FbUtils.getUserName());
         ActionFragment fragment = new ActionFragment();
         fragment.setArguments(args);
         loadFragment(fragment, ACTION_TAG);
@@ -266,24 +267,6 @@ public class TrainingActivity
         backToList.setVisibility(View.VISIBLE);
         fullTextTitle.setVisibility(View.INVISIBLE);
 
-    }
-
-    private String getUserName() {
-            Profile profile;
-
-            if (Profile.getCurrentProfile() == null) mProfileTracker = new ProfileTracker() {
-                @Override
-                protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-
-                    mProfileTracker.stopTracking();
-                    userName = currentProfile.getName();
-                }
-            };
-            else {
-                profile = Profile.getCurrentProfile();
-                userName = profile.getName();
-            }
-            return userName;
     }
 
     @Override

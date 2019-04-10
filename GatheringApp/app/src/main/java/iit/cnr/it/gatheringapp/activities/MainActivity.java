@@ -25,6 +25,7 @@ import iit.cnr.it.gatheringapp.fragments.SensorsFragment;
 import iit.cnr.it.gatheringapp.fragments.TrainingFragment;
 import iit.cnr.it.gatheringapp.service.BackgroundDetectedActivitiesService;
 import iit.cnr.it.gatheringapp.utils.BottomNavigationViewHelper;
+import iit.cnr.it.gatheringapp.utils.FbUtils;
 import iit.cnr.it.gatheringapp.utils.UserActivitiesHandler;
 
 public class MainActivity extends AppCompatActivity
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 
         //to keep the app alive in background and also with screen off
         final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "activityMain");
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ACTIVITY_MAIN");
         mWakeLock.acquire();
 
         setContentView(R.layout.activity_main);
@@ -73,11 +74,11 @@ public class MainActivity extends AppCompatActivity
 
         loadFragment(homeFragment, HOME_TAG);
 
-        BottomNavigationView bottomNavigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView bottomNavigation = findViewById(R.id.navigation);
         BottomNavigationViewHelper.removeShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(this);
 
-        userActivitiesHandler = new UserActivitiesHandler(this, "");
+        userActivitiesHandler = new UserActivitiesHandler(this, FbUtils.getUserName());
         //Activity recognition
         broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -95,7 +96,6 @@ public class MainActivity extends AppCompatActivity
 
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,
                 new IntentFilter(BROADCAST_DETECTED_ACTIVITY));
-        System.out.println("ON CREATE");
         startTracking();
     }
 
@@ -180,16 +180,14 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private boolean loadFragment(Fragment fragment, String tag) {
+    private void loadFragment(Fragment fragment, String tag) {
         //switching fragment
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.main_container, fragment, tag)
                     .commit();
-            return true;
         }
-        return false;
     }
 
     protected void displayFragment(Fragment newFragment, String tag, Fragment... fragments) {

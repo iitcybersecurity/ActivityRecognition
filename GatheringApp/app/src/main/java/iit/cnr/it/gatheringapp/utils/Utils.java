@@ -2,6 +2,8 @@ package iit.cnr.it.gatheringapp.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import iit.cnr.it.gatheringapp.R;
 
@@ -31,5 +33,19 @@ public class Utils {
         }
 
         return null;
+    }
+
+
+    //TODO understand why it's so inefficient
+    public static boolean loadFragment(FragmentManager fragmentManager, int viewId, Fragment fragment, String tag) {
+        //switching fragment
+        if (fragment != null) {
+            fragmentManager
+                    .beginTransaction()
+                    .replace(viewId, fragment, tag)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 }

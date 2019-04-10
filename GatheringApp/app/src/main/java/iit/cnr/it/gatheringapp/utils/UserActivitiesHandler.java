@@ -177,7 +177,7 @@ public class UserActivitiesHandler {
         LayoutInflater inflater = (LayoutInflater) this.activity.getApplicationContext().getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
 
-        TableRow row = (TableRow) inflater.inflate(R.layout.row_table, null);
+        TableRow row = (TableRow) inflater.inflate(R.layout.row_table, activitiesTable);
         TextView activityText = row.findViewById(R.id.activityText);
 
         activityText.setText(label);

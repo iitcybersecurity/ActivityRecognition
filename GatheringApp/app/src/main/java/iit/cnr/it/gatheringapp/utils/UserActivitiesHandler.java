@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -46,7 +47,7 @@ public class UserActivitiesHandler {
         walking = false;
         this.activity = _activity;
         this.username = username;
-        sensors = new Sensors(this.activity, username);
+        sensors = new Sensors(this.activity, username, false, null);
     }
 
     public String ActivityToString(int type){

@@ -106,7 +106,8 @@ public class ActionFragment extends Fragment {
         // Inflate the layout for this fragment
         View fragmentView = inflater.inflate(R.layout.fragment_action, container, false);
         context = fragmentView.getContext();
-        sensors = new Sensors(getActivity(), userName);
+
+        sensors = new Sensors(getActivity(), userName, false, fragmentView);
 
         // Setup text
         mTitleText = fragmentView.findViewById(R.id.action_title);

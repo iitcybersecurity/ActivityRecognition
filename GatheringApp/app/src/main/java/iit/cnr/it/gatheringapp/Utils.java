@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Properties;
 
 /**
@@ -29,5 +30,11 @@ public class Utils {
         }
 
         return null;
+    }
+
+    public static float round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
     }
 }

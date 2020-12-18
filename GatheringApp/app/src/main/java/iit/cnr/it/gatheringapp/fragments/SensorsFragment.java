@@ -1,20 +1,17 @@
 package iit.cnr.it.gatheringapp.fragments;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import iit.cnr.it.gatheringapp.R;
 import iit.cnr.it.gatheringapp.sensors.Accelerometer;
-import iit.cnr.it.gatheringapp.sensors.Sensors;
 
 /**
  * A simple {@link Fragment} subclass.

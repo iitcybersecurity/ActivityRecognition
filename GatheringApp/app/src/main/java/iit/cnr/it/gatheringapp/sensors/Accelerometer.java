@@ -1,15 +1,12 @@
 package iit.cnr.it.gatheringapp.sensors;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,18 +15,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import iit.cnr.it.gatheringapp.R;
-import iit.cnr.it.gatheringapp.utils.Utils;
-
 
 import java.util.Calendar;
+
+import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.utils.Utils;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
@@ -39,7 +39,7 @@ import static java.lang.Math.sqrt;
  */
 
 @SuppressLint("ValidFragment")
-public class Accelerometer extends android.support.v4.app.Fragment implements SensorEventListener, AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class Accelerometer extends Fragment implements SensorEventListener, AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     //Sensor variables
     private SensorManager senSensorManager;
@@ -80,7 +80,7 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
 
     private Context context;
     private String userName = "";
-    private Activity activity;
+    private AppCompatActivity activity;
     private Fragment parentFragment;
     private int accelerometerSensibility;
     private int gyroscopeSensibility;
@@ -91,7 +91,7 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
         this.parentFragment = parentFragment;
     }
 
-    public Accelerometer(Context context, String userName, Activity _activity) {
+    public Accelerometer(Context context, String userName, AppCompatActivity _activity) {
         this.context = context;
         this.userName = userName;
         this.activity = _activity;

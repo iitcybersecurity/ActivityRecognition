@@ -1,6 +1,5 @@
 package iit.cnr.it.gatheringapp.sensors;
 
-import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -8,6 +7,10 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+
 import iit.cnr.it.gatheringapp.dbutils.DbManage;
 import iit.cnr.it.gatheringapp.utils.Utils;
 
@@ -28,7 +31,7 @@ public class Sensors implements SensorEventListener {
     private float x_acc, y_acc, z_acc, x_gyr, y_gyr, z_gyr;
 
     //Main activity
-    private Activity activity;
+    private AppCompatActivity activity;
 
     //batch size
     private int batch_size = 50;
@@ -48,9 +51,9 @@ public class Sensors implements SensorEventListener {
 
     }
 
-    public Sensors(Activity _activity, String username) {
+    public Sensors(FragmentActivity _activity, String username) {
         this();
-        this.activity = _activity;
+        this.activity = (AppCompatActivity) _activity;
         this.username = username;
 
         //Accelerometer sensor initialization

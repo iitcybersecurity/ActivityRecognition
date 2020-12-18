@@ -13,14 +13,14 @@
             android:paddingBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/action_title"
-            android:textAppearance="@android:style/TextAppearance.Material.Display1" android:textSize="24sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:textSize="24sp"
             android:textAlignment="center"/>
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/instructions_record"
             android:id="@+id/instructions_record_text"
-            android:textAppearance="@android:style/TextAppearance.Material.Display1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textSize="18sp"
             android:textAlignment="center"/>
     <TextView
@@ -28,7 +28,7 @@
             android:layout_height="250dp"
             android:text="@string/instructions_container"
             android:id="@+id/instructions_copy_text"
-            android:textAppearance="@android:style/TextAppearance.Material.Display1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textSize="24sp"
             android:textAlignment="center"
             android:visibility="gone"/>
@@ -44,7 +44,7 @@
     <ImageView
             android:paddingTop="20dp"
             android:paddingBottom="10dp"
-            android:src="@drawable/ic_menu_slideshow"
+            app:srcCompat="@drawable/ic_menu_slideshow"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:id="@+id/instructions_view"/>

@@ -12,15 +12,17 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import iit.cnr.it.gatheringapp.R;
+
+import androidx.appcompat.app.ActionBar;
 
 import java.util.List;
+
+import iit.cnr.it.gatheringapp.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -124,31 +126,31 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
 
     /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
+     * Set up the {@link ActionBar}, if the API is available.
      */
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
-    /**
+    /**TODO:qui ci sono dei problemi a passare alla v.28
      * {@inheritDoc}
      */
-    @Override
+    //@Override
     public boolean onIsMultiPane() {
         return isXLargeTablet(this);
     }
 
-    /**
+    /**TODO:qui ci sono dei problemi a passare alla v.28
      * {@inheritDoc}
      */
-    @Override
+    //@Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.pref_headers, target);
+    public void onBuildHeaders(List<PreferenceActivity.Header> target) {
+        //loadHeadersFromResource(R.xml.pref_headers, target);
     }
 
     /**

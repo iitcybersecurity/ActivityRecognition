@@ -96,11 +96,12 @@
                         android:layout_marginBottom="42dp"
                         android:layout_centerHorizontal="true"/>
 
+                <!--android:drawableStart="@drawable/com_facebook_button_icon_white"-->
                 <com.facebook.login.widget.LoginButton
                         android:id="@+id/facebookLogin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/com_facebook_button_icon_white"
+                        android:drawableStart="#FFFFFF"
                         android:background="@drawable/com_facebook_button_background"
                         android:layout_gravity="center_horizontal"
                         android:layout_centerHorizontal="true"

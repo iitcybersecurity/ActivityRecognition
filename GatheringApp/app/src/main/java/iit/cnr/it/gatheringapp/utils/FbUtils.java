@@ -1,21 +1,25 @@
 package iit.cnr.it.gatheringapp.utils;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
-import iit.cnr.it.gatheringapp.R;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import iit.cnr.it.gatheringapp.R;
 
 /**
  * Created by giacomo on 23/10/18.
@@ -25,13 +29,13 @@ import java.net.URL;
 public class FbUtils extends AsyncTask<String, Void, Bitmap> {
     private String userID;
     private static String userName;
-    private Activity activity;
+    private AppCompatActivity activity;
     private static ProfileTracker mProfileTracker;
 
-    public FbUtils(String userId, String userName, Activity _activity){
+    public FbUtils(String userId, String userName, FragmentActivity _activity){
         this.userID = userId;
         this.userName = userName;
-        this.activity = _activity;
+        this.activity = (AppCompatActivity) _activity;
     }
 
 

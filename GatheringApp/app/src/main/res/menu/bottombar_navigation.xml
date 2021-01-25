@@ -21,4 +21,9 @@
             android:icon="@drawable/ic_baseline_history"
             android:title="History"/>
 
+    <item
+        android:id="@+id/navigation_probability"
+        android:icon="@drawable/ic_baseline_probability"
+        android:title="Probability"/>
+
 </menu>

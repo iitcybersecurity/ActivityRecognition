@@ -18,19 +18,28 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import iit.cnr.it.gatheringapp.Classifier.HARClassifier;
 import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.Classifier.TensorFlowClassifier;
 import iit.cnr.it.gatheringapp.utils.Utils;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
+import static iit.cnr.it.gatheringapp.Utils.round;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
@@ -40,7 +49,17 @@ import static java.lang.Math.sqrt;
 
 @SuppressLint("ValidFragment")
 public class Accelerometer extends android.support.v4.app.Fragment implements SensorEventListener, AdapterView.OnItemSelectedListener, View.OnClickListener {
+    private static final int N_SAMPLES = 200;
+    private static List<Float> x;
+    private static List<Float> y;
+    private static List<Float> z;
 
+    private int number_labels;
+    private TextView decisionTextView;
+    private float[] results;
+
+    private TensorFlowClassifier classifier;
+    ArrayList<String> labels = new ArrayList<>();
     //Sensor variables
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
@@ -85,6 +104,8 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
     private int accelerometerSensibility;
     private int gyroscopeSensibility;
     private int stepCounterSensibility;
+    private HARClassifier HAR;
+    private float[] predictions;
 
     public Accelerometer(Context context, Fragment parentFragment) {
         this.context = context;
@@ -134,6 +155,7 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
         series_x = new LineGraphSeries<>(new DataPoint[]{
                 new DataPoint(Calendar.getInstance().getTime(), 0)
         });
+
         initGraph(graph_x, series_x, "X Axis");
 
         //Graph y initialization
@@ -154,6 +176,28 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
         graph_y.setVisibility(View.INVISIBLE);
         graph_z.setVisibility(View.VISIBLE);
         //startSensors();
+
+        x = new ArrayList<>();
+        y = new ArrayList<>();
+        z = new ArrayList<>();
+
+        //lettura delle labels di classificazione da file di testo di configurazione
+        BufferedReader reader;
+        try{
+            final InputStream file = getActivity().getAssets().open("labels_config.txt");
+            reader = new BufferedReader(new InputStreamReader(file));
+            String line = reader.readLine();
+            while(line != null){
+                labels.add(line);
+                line = reader.readLine();
+            }
+        } catch(IOException ioe){
+            ioe.printStackTrace();
+        }
+        number_labels = labels.size();
+        decisionTextView = (TextView)v.findViewById(R.id.decision);
+        classifier = new TensorFlowClassifier(getActivity().getApplicationContext());
+        HAR = new HARClassifier(classifier);
 
         return v;
     }
@@ -219,6 +263,39 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
             Log.d("Steps ", String.valueOf(sensorEvent.values[0]) + "");
             step_text.setText(String.valueOf((int)sensorEvent.values[0]) + " steps");
         }*/
+        HAR.setElement(x_acc, y_acc, z_acc);
+        predictions = HAR.activityPrediction();
+        if(predictions != null)
+            writeResults(predictions);
+    }
+
+    private void writeResults(float[] predictions) {
+        float max = -1;
+        int idx = -1;
+        for (int i = 0; i < predictions.length; i++) {
+            if (predictions[i] > max) {
+                idx = i;
+                max = predictions[i];
+            }
+        }
+
+        //lettura delle labels di classificazione da file di testo di configurazione
+        BufferedReader reader;
+        try{
+            final InputStream file = getActivity().getAssets().open("labels_config.txt");
+            reader = new BufferedReader(new InputStreamReader(file));
+            String line = reader.readLine();
+            while(line != null){
+                labels.add(line);
+                line = reader.readLine();
+            }
+        } catch(IOException ioe){
+            ioe.printStackTrace();
+        }
+        decisionTextView.setText(labels.get(idx));
+        idx++;
+        int id = getActivity().getBaseContext().getResources().getIdentifier("ic" + idx, "drawable", getActivity().getBaseContext().getPackageName());
+        decisionTextView.setCompoundDrawablesWithIntrinsicBounds( id, 0, 0, 0);
     }
 
     @Override
@@ -304,6 +381,14 @@ public class Accelerometer extends android.support.v4.app.Fragment implements Se
         graph.getViewport().setScalableY(true);
         // activate vertical scrolling
         graph.getViewport().setScrollableY(true);
+
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(-30);
+        graph.getViewport().setMaxY(50);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(100);
+        graph.getViewport().setMaxX(500);
 
         graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
 

@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import iit.cnr.it.gatheringapp.R;
 import iit.cnr.it.gatheringapp.fragments.HistoryFragment;
 import iit.cnr.it.gatheringapp.fragments.HomeFragment;
+import iit.cnr.it.gatheringapp.fragments.ProbabilityFragment;
 import iit.cnr.it.gatheringapp.fragments.SensorsFragment;
 import iit.cnr.it.gatheringapp.fragments.TrainingFragment;
 import iit.cnr.it.gatheringapp.service.BackgroundDetectedActivitiesService;
@@ -33,12 +34,14 @@ public class MainActivity extends AppCompatActivity
         HomeFragment.OnFragmentInteractionListener,
         HistoryFragment.OnFragmentInteractionListener,
         SensorsFragment.OnFragmentInteractionListener,
-        TrainingFragment.OnFragmentInteractionListener {
+        TrainingFragment.OnFragmentInteractionListener,
+        ProbabilityFragment.OnFragmentInteractionListener{
 
     private HomeFragment homeFragment;
     private SensorsFragment sensorsFragment;
     private TrainingFragment trainingFragment;
     private HistoryFragment historyFragment;
+    private ProbabilityFragment probabilityFragment;
 
     private SettingsActivity settingsActivity;
     private LoginActivity loginActivity;
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     private static final String SENSORS_TAG = "F_SENSORS";
     private static final String TRAINING_TAG = "F_TRAINING";
     private static final String HISTORY_TAG = "F_HISTORY";
+    private static final String PROBABILITY_TAG = "F_PROBABILITY";
 
 
     //Activity recognition
@@ -116,27 +120,33 @@ public class MainActivity extends AppCompatActivity
                 if (homeFragment == null) {
                     homeFragment = new HomeFragment();
                 }
-                displayFragment(homeFragment, HOME_TAG, sensorsFragment, trainingFragment, historyFragment);
+                displayFragment(homeFragment, HOME_TAG, sensorsFragment, trainingFragment, historyFragment,probabilityFragment);
                 break;
 
             case R.id.navigation_sensors:
                 if (sensorsFragment == null) {
                     sensorsFragment = new SensorsFragment();
                 }
-                displayFragment(sensorsFragment, SENSORS_TAG, trainingFragment, historyFragment, homeFragment);
+                displayFragment(sensorsFragment, SENSORS_TAG, trainingFragment, historyFragment,probabilityFragment, homeFragment);
                 break;
 
             case R.id.navigation_training:
                 if (trainingFragment == null) {
                     trainingFragment = new TrainingFragment();
                 }
-                displayFragment(trainingFragment, TRAINING_TAG, historyFragment, homeFragment, sensorsFragment);
+                displayFragment(trainingFragment, TRAINING_TAG, historyFragment, probabilityFragment,homeFragment, sensorsFragment);
                 break;
             case R.id.navigation_history:
                 if (historyFragment == null) {
                     historyFragment = new HistoryFragment();
                 }
-                displayFragment(historyFragment, HISTORY_TAG, trainingFragment, homeFragment, sensorsFragment);
+                displayFragment(historyFragment, HISTORY_TAG, probabilityFragment, trainingFragment, homeFragment, sensorsFragment);
+                break;
+            case R.id.navigation_probability:
+                if (probabilityFragment == null) {
+                    probabilityFragment = new ProbabilityFragment();
+                }
+                displayFragment(probabilityFragment, PROBABILITY_TAG, trainingFragment, historyFragment, homeFragment, sensorsFragment);
                 break;
         }
         return true;

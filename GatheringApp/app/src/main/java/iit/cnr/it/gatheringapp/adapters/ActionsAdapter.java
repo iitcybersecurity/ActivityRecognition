@@ -18,8 +18,8 @@ import java.util.List;
 
 public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHolder>  {
 
-    private List<Action> values;
-    private ActionsAdapterCallback mActionsAdapterCallback;
+    private final List<Action> values;
+    private final ActionsAdapterCallback mActionsAdapterCallback;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -114,7 +114,7 @@ public class ActionsAdapter extends RecyclerView.Adapter<ActionsAdapter.ViewHold
     }
 
 
-    public static interface ActionsAdapterCallback {
+    public interface ActionsAdapterCallback {
         void onMethodCallback(Action action);
     }
 }

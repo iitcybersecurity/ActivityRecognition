@@ -12,7 +12,7 @@ public class HARClassifier {
     private static List<Float> x;
     private static List<Float> y;
     private static List<Float> z;
-    private TensorFlowClassifier classifier;
+    private final TensorFlowClassifier classifier;
 
     private float[] results;
 

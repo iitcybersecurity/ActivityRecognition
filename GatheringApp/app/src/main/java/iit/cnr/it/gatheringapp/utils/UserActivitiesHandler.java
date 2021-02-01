@@ -37,12 +37,12 @@ public class UserActivitiesHandler {
     private static ArrayList<Integer> detectedArray;
     private boolean walking;
 
-    private AppCompatActivity activity;
-    private Sensors sensors;
-    private String username;
+    private final AppCompatActivity activity;
+    private final Sensors sensors;
+    private final String username;
     private int currentActivity;
     private int pastActivity;
-    private int CURRENT_ACTIVITIES_TO_SHOW = 6;
+    private final int CURRENT_ACTIVITIES_TO_SHOW = 6;
 
 
     public UserActivitiesHandler(FragmentActivity _activity, String username){

@@ -5,19 +5,16 @@ import android.content.Context;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import iit.cnr.it.gatheringapp.R;
 
@@ -25,12 +22,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 
 import iit.cnr.it.gatheringapp.sensors.Sensors;
 import iit.cnr.it.gatheringapp.Classifier.TensorFlowClassifier;
+import iit.cnr.it.gatheringapp.utils.FbUtils;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -112,7 +108,7 @@ public class ProbabilityFragment extends Fragment {
         TableLayout table = (TableLayout)fragmentView.findViewById(R.id.table);
         CreateTable(table);
         context = fragmentView.getContext();
-        sensor = new Sensors(getActivity(), "MarcoBongiovanni",true,fragmentView);
+        sensor = new Sensors(getActivity(), FbUtils.getUserName(),true,fragmentView);//mettere un utente fittizio nel caso
         sensor.startSensorsHAR(getActivity().getApplicationContext());
         return fragmentView;
     }

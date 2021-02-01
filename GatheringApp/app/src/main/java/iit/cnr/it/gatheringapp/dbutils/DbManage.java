@@ -29,12 +29,12 @@ public class DbManage {
         URL url = null;
         HttpURLConnection httpConn = null;
         Utils utils = new Utils();
-        String databaseIp = utils.getConfigValue(context, "databaseIp");
-        String databasePort = utils.getConfigValue(context, "databasePort");
-        String databaseName = utils.getConfigValue(context, "databaseName");
-        String databaseUsername = utils.getConfigValue(context, "databaseUsername");
-        String databasePassword = utils.getConfigValue(context, "databasePassword");
-        String measurement = utils.getConfigValue(context, "measurement");
+        String databaseIp = Utils.getConfigValue(context, "databaseIp");
+        String databasePort = Utils.getConfigValue(context, "databasePort");
+        String databaseName = Utils.getConfigValue(context, "databaseName");
+        String databaseUsername = Utils.getConfigValue(context, "databaseUsername");
+        String databasePassword = Utils.getConfigValue(context, "databasePassword");
+        String measurement = Utils.getConfigValue(context, "measurement");
 
         try {
             url = new URL("http", databaseIp, Integer.parseInt(databasePort), "/write?db="+ databaseName + "&u=" + databaseUsername +"&p=" + databasePassword );
@@ -86,13 +86,12 @@ public class DbManage {
     public boolean write_string(Context context, String data) throws IOException {
         URL url = null;
         HttpURLConnection httpConn = null;
-        Utils utils = new Utils();
-        String databaseIp = utils.getConfigValue(context, "databaseIp");
-        String databasePort = utils.getConfigValue(context, "databasePort");
-        String databaseName = utils.getConfigValue(context, "databaseName");
-        String databaseUsername = utils.getConfigValue(context, "databaseUsername");
-        String databasePassword = utils.getConfigValue(context, "databasePassword");
-        String measurement = utils.getConfigValue(context, "measurement");
+        String databaseIp = Utils.getConfigValue(context, "databaseIp");
+        String databasePort = Utils.getConfigValue(context, "databasePort");
+        String databaseName = Utils.getConfigValue(context, "databaseName");
+        String databaseUsername = Utils.getConfigValue(context, "databaseUsername");
+        String databasePassword = Utils.getConfigValue(context, "databasePassword");
+        String measurement = Utils.getConfigValue(context, "measurement");
 
         try {
             url = new URL("http", databaseIp, Integer.parseInt(databasePort), "/write?db="+ databaseName + "&u=" + databaseUsername +"&p=" + databasePassword );

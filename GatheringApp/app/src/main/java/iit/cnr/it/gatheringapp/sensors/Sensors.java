@@ -53,7 +53,7 @@ public class Sensors implements SensorEventListener {
     private AppCompatActivity activity;
 
     //batch size
-    private int batch_size = 50;
+    private final int batch_size = 50;
     private int countInfluxData = 0;
     private String influxData = "";
 
@@ -90,8 +90,7 @@ public class Sensors implements SensorEventListener {
 
     }
 
-    public Sensors(FragmentActivity _activity, String username) {
-    public Sensors(Activity _activity, String username, boolean set, View fragmentView) {
+    public Sensors(FragmentActivity _activity, String username, boolean set, View fragmentView) {
         this();
         this.activity = (AppCompatActivity) _activity;
         this.username = username;
@@ -175,7 +174,7 @@ public class Sensors implements SensorEventListener {
         int idx = -1;
         for (int i = 0; i < predictions.length; i++) {
             final TextView probability = (TextView) probabilityFragment.findViewById(i);
-            probability.setText(Float.toString(round(predictions[i]* 100, 2)) + "%" );
+            probability.setText(round(predictions[i] * 100, 2) + "%" );
 
             if (predictions[i] > max) {
                 idx = i;
@@ -261,7 +260,7 @@ public class Sensors implements SensorEventListener {
 
     public void prepareInfluxData(float x, float y, float z, String sensor, String activityLabel,float probability) {
         long timestamp = System.currentTimeMillis();
-        String timeStamp = Long.toString(timestamp) + "000000";
+        String timeStamp = timestamp + "000000";
         String x_to_write = "activities,sensor=" + sensor + ",device=smartphone,axes=x,activity=" + activityLabel + ",user=" + username.replaceAll("\\s", "") + ",probability=" + probability +" value=" + x + " " + timeStamp + "\n";
         String y_to_write = "activities,sensor=" + sensor + ",device=smartphone,axes=y,activity=" + activityLabel + ",user=" + username.replaceAll("\\s", "") + ",probability=" + probability +" value=" + y + " " + timeStamp + "\n";
         String z_to_write = "activities,sensor=" + sensor + ",device=smartphone,axes=z,activity=" + activityLabel + ",user=" + username.replaceAll("\\s", "") + ",probability=" + probability +" value=" + z + " " + timeStamp + "\n";

@@ -101,7 +101,7 @@ public class Accelerometer extends Fragment implements SensorEventListener, Adap
     //streaming button
     private Button connectPhones;
 
-    private Context context;
+    private final Context context;
     private String userName = "";
     private AppCompatActivity activity;
     private Fragment parentFragment;
@@ -206,7 +206,7 @@ public class Accelerometer extends Fragment implements SensorEventListener, Adap
         return v;
     }
 
-    private Button.OnClickListener connectListener = new Button.OnClickListener() {
+    private final Button.OnClickListener connectListener = new Button.OnClickListener() {
         @Override
         public void onClick(View v) {
 

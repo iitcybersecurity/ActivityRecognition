@@ -36,7 +36,7 @@
 
     <!-- Facebook Login strings-->
     <string name="facebook_app_id">1975734206016848</string>
-    <string name="fb_login_protocol_scheme">fb170729306690855</string>
+    <string name="fb_login_protocol_scheme">fb1975734206016848</string>
     <string name="title_activity_main"></string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -156,4 +156,7 @@
 
     <string name="activity">Activity</string>
     <string name="probability">Probability</string>
+    <string name="history">History</string>
+    <string name="home">Home</string>
+    <string name="probability_calculating">calculating...</string>
 </resources>

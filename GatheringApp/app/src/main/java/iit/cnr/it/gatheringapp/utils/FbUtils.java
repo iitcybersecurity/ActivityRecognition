@@ -27,14 +27,14 @@ import iit.cnr.it.gatheringapp.R;
 
 @SuppressLint("StaticFieldLeak")
 public class FbUtils extends AsyncTask<String, Void, Bitmap> {
-    private String userID;
+    private final String userID;
     private static String userName;
-    private AppCompatActivity activity;
+    private final AppCompatActivity activity;
     private static ProfileTracker mProfileTracker;
 
     public FbUtils(String userId, String userName, FragmentActivity _activity){
         this.userID = userId;
-        this.userName = userName;
+        FbUtils.userName = userName;
         this.activity = (AppCompatActivity) _activity;
     }
 

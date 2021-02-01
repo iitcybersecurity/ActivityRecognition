@@ -1,6 +1,5 @@
 package iit.cnr.it.gatheringapp.activities;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,16 +7,19 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import iit.cnr.it.gatheringapp.R;
 import iit.cnr.it.gatheringapp.fragments.HistoryFragment;
 import iit.cnr.it.gatheringapp.fragments.HomeFragment;
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         loadFragment(homeFragment, HOME_TAG);
 
         BottomNavigationView bottomNavigation = findViewById(R.id.navigation);
-        BottomNavigationViewHelper.removeShiftMode(bottomNavigation);
+        //BottomNavigationViewHelper.removeShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(this);
 
         userActivitiesHandler = new UserActivitiesHandler(this, FbUtils.getUserName());
@@ -185,7 +187,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void goToActivity(Activity activity) {
+    private void goToActivity(AppCompatActivity activity) {
         Intent intent = new Intent(this, activity.getClass());
         startActivity(intent);
     }

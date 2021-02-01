@@ -1,11 +1,9 @@
 package iit.cnr.it.gatheringapp.utils;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,15 +11,20 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.FragmentActivity;
+
 import com.google.android.gms.location.DetectedActivity;
-import iit.cnr.it.gatheringapp.R;
-import iit.cnr.it.gatheringapp.activities.MainActivity;
-import iit.cnr.it.gatheringapp.sensors.Sensors;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import iit.cnr.it.gatheringapp.R;
+import iit.cnr.it.gatheringapp.activities.MainActivity;
+import iit.cnr.it.gatheringapp.sensors.Sensors;
 
 /**
  * Created by giacomo on 25/10/18.
@@ -34,7 +37,7 @@ public class UserActivitiesHandler {
     private static ArrayList<Integer> detectedArray;
     private boolean walking;
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private Sensors sensors;
     private String username;
     private int currentActivity;
@@ -42,10 +45,10 @@ public class UserActivitiesHandler {
     private int CURRENT_ACTIVITIES_TO_SHOW = 6;
 
 
-    public UserActivitiesHandler(Activity _activity, String username){
+    public UserActivitiesHandler(FragmentActivity _activity, String username){
         detectedArray = new ArrayList<>();
         walking = false;
-        this.activity = _activity;
+        this.activity = (AppCompatActivity) _activity;
         this.username = username;
         sensors = new Sensors(this.activity, username, false, null);
     }

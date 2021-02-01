@@ -2,14 +2,16 @@ package iit.cnr.it.gatheringapp.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import iit.cnr.it.gatheringapp.R;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
+import iit.cnr.it.gatheringapp.R;
 
 /**
  * Created by giacomo on 18/10/18.

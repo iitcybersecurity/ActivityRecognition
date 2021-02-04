@@ -111,6 +111,9 @@ public class Accelerometer extends Fragment implements SensorEventListener, Adap
     private HARClassifier HAR;
     private float[] predictions;
 
+    int ACCEL_SENSOR_DELAY = 20;
+    long lastAccelSensorChange = 0;
+
     public Accelerometer(Context context, Fragment parentFragment) {
         this.context = context;
         this.parentFragment = parentFragment;
@@ -221,15 +224,25 @@ public class Accelerometer extends Fragment implements SensorEventListener, Adap
         frequency_text.setText(current_sampling_rate + " Hz");
     }
 
+    private void compute_sampling_rate(float sampling) {
+        frequency_text.setText(Float.toString(sampling) + " Hzz");
+    }
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         Sensor mySensor = sensorEvent.sensor;
+        long now = System.currentTimeMillis();
 
         if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            //Get the accelerometer values
-            x_acc = sensorEvent.values[0];
-            y_acc = sensorEvent.values[1];
-            z_acc = sensorEvent.values[2];
+            if (now-lastAccelSensorChange > ACCEL_SENSOR_DELAY) {
+
+                //Get the accelerometer values
+                x_acc = sensorEvent.values[0];
+                y_acc = sensorEvent.values[1];
+                z_acc = sensorEvent.values[2];
+                compute_sampling_rate(now - lastAccelSensorChange);
+                lastAccelSensorChange = now;
+            }
         }
 
         if (mySensor.getType() == Sensor.TYPE_GYROSCOPE) {
@@ -242,7 +255,7 @@ public class Accelerometer extends Fragment implements SensorEventListener, Adap
 
         if (sensor_choosed != 1) {
             //Sampling rate computation
-            computeSamplingRate();
+            //computeSamplingRate();
             //Accelerometer
             if (sensor_choosed == 0) {
                 series_x.appendData(new DataPoint(Calendar.getInstance().getTime(), x_acc), true, 40);
@@ -256,7 +269,7 @@ public class Accelerometer extends Fragment implements SensorEventListener, Adap
         }
         //Gyroscope
         if (sensor_choosed == 1) {
-            computeSamplingRate();
+            //computeSamplingRate();
             Log.v("Gyr: ", System.currentTimeMillis() / 1000 + " " + x_gyr + " " + y_gyr + " " + z_gyr + " " + graph_x.getViewport().getMinX(true));
             series_x.appendData(new DataPoint(Calendar.getInstance().getTime(), x_gyr), true, 40);
             series_y.appendData(new DataPoint(Calendar.getInstance().getTime(), y_gyr), true, 40);
@@ -403,16 +416,19 @@ public class Accelerometer extends Fragment implements SensorEventListener, Adap
     private void initSensorsSensibility() {
         try {
             Context context = getContext();
-            accelerometerSensibility = Integer.valueOf(Utils.getConfigValue(context, "accelerometer.sensibility"));
-            gyroscopeSensibility = Integer.valueOf(Utils.getConfigValue(context, "gyroscope.sensibility"));
-            stepCounterSensibility = Integer.valueOf(Utils.getConfigValue(context, "step.counter.sensibility"));
+            //accelerometerSensibility = Integer.valueOf(Utils.getConfigValue(context, "accelerometer.sensibility"));
+            //gyroscopeSensibility = Integer.valueOf(Utils.getConfigValue(context, "gyroscope.sensibility"));
+            //stepCounterSensibility = Integer.valueOf(Utils.getConfigValue(context, "step.counter.sensibility"));
+            accelerometerSensibility = SensorManager.SENSOR_DELAY_FASTEST;
+            gyroscopeSensibility = SensorManager.SENSOR_DELAY_UI;
+            stepCounterSensibility = SensorManager.SENSOR_DELAY_UI;
 
         } catch (Exception exception) {
             exception.printStackTrace();
             Log.d("SENSORS_ERROR", "Unable to retrieve configuration values, setting to default...");
-            accelerometerSensibility = SensorManager.SENSOR_DELAY_NORMAL;
-            gyroscopeSensibility = SensorManager.SENSOR_DELAY_NORMAL;
-            stepCounterSensibility = SensorManager.SENSOR_DELAY_NORMAL;
+            accelerometerSensibility = SensorManager.SENSOR_DELAY_FASTEST;
+            gyroscopeSensibility = SensorManager.SENSOR_DELAY_UI;
+            stepCounterSensibility = SensorManager.SENSOR_DELAY_UI;
         }
     }
 

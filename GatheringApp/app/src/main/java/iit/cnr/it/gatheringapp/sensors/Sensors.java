@@ -5,6 +5,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewDebug;
@@ -86,6 +89,12 @@ public class Sensors implements SensorEventListener {
     long current_time = 0;
     float current_sampling_rate = 0;
 
+
+    int ACCEL_SENSOR_DELAY = 20;
+    long lastAccelSensorChange = 0;
+
+
+
     public Sensors() {
 
     }
@@ -95,6 +104,7 @@ public class Sensors implements SensorEventListener {
         this.activity = (AppCompatActivity) _activity;
         this.username = username;
         probabilityFragment = fragmentView;
+
 
         //Accelerometer sensor initialization
         senSensorManager = (SensorManager) activity.getSystemService(Context.SENSOR_SERVICE);
@@ -112,7 +122,7 @@ public class Sensors implements SensorEventListener {
 
     private void compute_sampling_rate() {
         current_time = System.currentTimeMillis();
-        current_sampling_rate = (float) (200 / ((current_time - prev_time) * pow(10, -3)));
+        current_sampling_rate = (float) ((current_time - prev_time) * pow(10, -3));
 
         frequency = probabilityFragment.findViewById(R.id.frequency_text2);
         if(prev_time != 0)
@@ -120,10 +130,22 @@ public class Sensors implements SensorEventListener {
         prev_time = current_time;
     }
 
+    private void compute_sampling_rate(float sampling) {
+        current_time = System.currentTimeMillis();
+        current_sampling_rate = (float) ((current_time - prev_time) * pow(10, -3));
+
+        frequency = probabilityFragment.findViewById(R.id.frequency_text2);
+        if(prev_time != 0)
+            frequency.setText(Float.toString(sampling) + " Hz");
+        prev_time = current_time;
+    }
+
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         Sensor mySensor = sensorEvent.sensor;
         if(test == false){
+
             if (mySensor.getType() == Sensor.TYPE_GYROSCOPE && HAR_set == false) {
                 //Get the gyroscope values
                 x_gyr = sensorEvent.values[0];
@@ -135,21 +157,29 @@ public class Sensors implements SensorEventListener {
             }
 
             if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                long now = System.currentTimeMillis();
+                if (now-lastAccelSensorChange > ACCEL_SENSOR_DELAY) {
 
-                //Get the accelerometer values
-                x_acc = sensorEvent.values[0];
-                y_acc = sensorEvent.values[1];
-                z_acc = sensorEvent.values[2];
+                    //Get the accelerometer values
+                    x_acc = sensorEvent.values[0];
+                    y_acc = sensorEvent.values[1];
+                    z_acc = sensorEvent.values[2];
+                    compute_sampling_rate(now-lastAccelSensorChange);
+                    lastAccelSensorChange = now;
+
+                }
 
                 float predicted = -1;
                 if (HAR_set == true) {
                     HAR.setElement(x_acc, y_acc, z_acc);
                     predictions = HAR.activityPrediction();
+
                     if (predictions != null) {
                         Log.d("PREDICTION", Integer.toString(predictions.length));
+
                         predicted = writeResults(predictions);
                         pred = true;
-                        compute_sampling_rate();
+                        //compute_sampling_rate();
                     }
 /*
                     time.add(System.currentTimeMillis());

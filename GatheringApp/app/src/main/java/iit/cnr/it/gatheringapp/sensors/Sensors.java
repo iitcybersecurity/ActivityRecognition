@@ -164,7 +164,7 @@ public class Sensors implements SensorEventListener {
                     x_acc = sensorEvent.values[0];
                     y_acc = sensorEvent.values[1];
                     z_acc = sensorEvent.values[2];
-                    compute_sampling_rate(now-lastAccelSensorChange);
+                    //compute_sampling_rate(now-lastAccelSensorChange);
                     lastAccelSensorChange = now;
 
                 }

@@ -246,11 +246,15 @@ public class Accelerometer extends Fragment implements SensorEventListener, Adap
         }
 
         if (mySensor.getType() == Sensor.TYPE_GYROSCOPE) {
-            //Get the gyroscope values
-            x_gyr = sensorEvent.values[0];
-            y_gyr = sensorEvent.values[1];
-            z_gyr = sensorEvent.values[2];
+            if (now-lastAccelSensorChange > ACCEL_SENSOR_DELAY) {
 
+                //Get the gyroscope values
+                x_gyr = sensorEvent.values[0];
+                y_gyr = sensorEvent.values[1];
+                z_gyr = sensorEvent.values[2];
+                compute_sampling_rate(now - lastAccelSensorChange);
+                lastAccelSensorChange = now;
+            }
         }
 
         if (sensor_choosed != 1) {

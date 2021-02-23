@@ -40,6 +40,38 @@ def read_wisdm_dataset(dataset_path):
     )
     return df_train, df_test
 
+def read_wisdm_dataset_1(dataset_path):
+    column_names = [
+        'user_id',
+        'activity',
+        'timestamp',
+        'x_axis',
+        'y_axis',
+        'z_axis'
+    ]
+
+    df = pd.read_csv(
+        dataset_path,
+        header=None,
+        names=column_names
+    )
+
+    df.z_axis.replace(regex=True, inplace=True, to_replace=r';', value=r'')
+    df['z_axis'] = df.z_axis.astype(np.float64)
+    df.dropna(axis=0, how='any', inplace=True)
+
+
+    scale_columns = ['x_axis', 'y_axis', 'z_axis']
+
+    scaler = RobustScaler()
+    scaler = scaler.fit(df[scale_columns])
+
+    df.loc[:, scale_columns] = scaler.transform(
+        df[scale_columns].to_numpy()
+    )
+
+    return df
+
 
 
 def create_dataset(X, y, time_steps=1, step=1):
@@ -81,5 +113,6 @@ def create_train_test(df_train, df_test=None, TIME_STEPS=200, STEP=40):
 
 
     print(X_train.shape, y_train.shape)
+
 
 

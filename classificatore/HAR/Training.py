@@ -1,14 +1,29 @@
+import pickle
+
 import seaborn as sns
+import numpy as np
 import keras
 from keras import models
 import pandas as pd
-from DataPreprocessing import read_wisdm_dataset, create_train_test
-from Settings import DATASET_PATH, BATCH_SIZE, EPOCHS, num_classes, TIME_STEPS, STEP, model_name, weights_name
+from DataPreprocessing import read_wisdm_dataset, create_train_test, read_wisdm_dataset_1
+from Settings import  BATCH_SIZE, EPOCHS, num_classes, TIME_STEPS, STEP, model_name, weights_name, \
+    TRAINING_PATH, TESTING_PATH
 from model import  lstm_model_1
 
-TRAIN_FROM_SCRATCH = False
+TRAIN_FROM_SCRATCH = True
 
-df_train, df_test = read_wisdm_dataset(DATASET_PATH)
+
+def reverse_onehot(onehot_data):
+    # onehot_data assumed to be channel last
+    data_copy = np.zeros(onehot_data.shape[:-1])
+    for c in range(onehot_data.shape[-1]):
+        img_c = onehot_data[..., c]
+        data_copy[img_c == 1] = c
+    return data_copy
+
+#df_train, df_test = read_wisdm_dataset(DATASET_PATH)
+df_train = read_wisdm_dataset_1(TRAINING_PATH)
+df_test = read_wisdm_dataset_1(TESTING_PATH)
 X_train, y_train, X_test, y_test = create_train_test(df_train, df_test, TIME_STEPS, STEP)
 
 model = lstm_model_1(X_train.shape, num_classes)
@@ -52,7 +67,24 @@ else:
                           batch_size=BATCH_SIZE,
                           epochs=EPOCHS,
                           callbacks=callbacks_list,
-                          validation_split=0.1,
-                          shuffle=False,
+                          validation_data=(X_test, y_test),
+                          shuffle=True,
                           verbose=1)
+
+
+
+    y_test_pred = reverse_onehot(y_test)
+    print(model.evaluate(X_test, y_test))
+
+    print(y_test_pred)
+    prediction = model.predict(X_test, verbose=1)
+    print(prediction)
+
+    with open("test_prediction_without_giacomo.txt", "wb") as fp:  # Pickling
+        pickle.dump(prediction, fp)
+
+    with open("test_true.txt", "wb") as fp:  # Pickling
+        pickle.dump(y_test_pred, fp)
+
+
 

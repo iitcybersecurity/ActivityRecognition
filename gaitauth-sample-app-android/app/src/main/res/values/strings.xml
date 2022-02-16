@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">GaitAuth Sample App</string>
+    <string name="create_model_button">Create Model</string>
+    <string name="load_model_button">Load Model</string>
+    <string name="train_model_button">Train Model</string>
+    <string name="add_features_button">Add Features</string>
+    <string name="send_features_http_button">Send Features via HTTP</string>
+    <string name="compare_features_http_button">Compare Features via HTTP</string>
+    <string name="start_collection_button">Start Collection</string>
+    <string name="stop_collection_button">Stop Collection</string>
+    <string name="train_model_confirmation_dialog_title">Train Model</string>
+    <string name="train_model_confirmation_dialog_message">Are you sure you would like to begin training your model? This action cannot be reversed.</string>
+    <string name="collected_label">Collected</string>
+    <string name="pending_model_help_text">Your model is being trained.\n Please check back in later. This operation may take several hours to complete.</string>
+    <string name="refreshed_status_label">Refreshed:</string>
+    <string name="refreshed_status_default">Unknown</string>
+    <string name="refresh_button">Refresh</string>
+    <string name="model_error_type_training_failed">Model Training Failed:</string>
+    <string name="model_error_type_loading_failed">Loading Model Failed:</string>
+    <string name="model_error_help_message">Reset with the trash button</string>
+    <string name="model_loaded_type_trained_successfully">Model Successfully Trained:</string>
+    <string name="model_loaded_type_loaded_successfully">Model Successfully Loaded:</string>
+    <string name="model_loaded_help_message">Create an Authenticator to start testing the model</string>
+    <string name="create_authenticator_button">Create Authenticator</string>
+    <string name="authentication_status_button">Authentication Status</string>
+    <string name="delete_authenticator_button">Delete Authenticator</string>
+    <string name="back_to_authenticator_button">Back</string>
+    <string name="authenticated">Authenticated</string>
+    <string name="unauthenticated">Unauthenticated</string>
+    <string name="inconclusive">Inconclusive</string>
+    <string name="info">Info</string>
+    <string name="reset_message">Are you sure you would like to reset your model? The training process will be restarted and all progress will be lost.</string>
+    <string name="reset">Reset</string>
+    <string name="unifyid_sdk_init_failure_toast">Failed to initialize UnifyID SDK.</string>
+    <string name="create_model_failure_toast">Failed to create model.</string>
+    <string name="uploaded_label">Uploaded</string>
+    <string name="feature_collection_service_message">UnifyID GaitAuth service is ready.</string>
+    <string name="model_error_default_reason">Unknown reason.</string>
+    <string name="score_features">Score Features</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="auth_status_text">Status</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="http_server_url">https://cosine-api.herokuapp.com</string>
+</resources>

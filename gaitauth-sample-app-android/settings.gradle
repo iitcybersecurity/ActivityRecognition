@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "GaitAuth Sample App"
